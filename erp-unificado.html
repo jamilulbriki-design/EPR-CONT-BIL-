@@ -1,0 +1,2772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP Corporativo — RH & Contabilidade</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0F2D52;--accent:#2A7FE8;--accent2:#1a6dd0;
+  --green:#1DB97A;--red:#E84040;--yellow:#F5A623;--purple:#7C3AED;
+  --bg:#EFF2F7;--white:#fff;--g1:#F7F9FC;--g2:#E8ECF3;--g3:#B0BBC9;--g4:#6B7A90;
+  --text:#1A2535;--r:4px;--sh:0 1px 4px rgba(0,0,0,.10);--sh2:0 4px 16px rgba(0,0,0,.13);
+  --sw:220px;--hh:54px;
+}
+html,body{height:100%;font-family:'Segoe UI',Arial,sans-serif;font-size:14px;color:var(--text);background:var(--bg)}
+.app{display:flex;height:100vh;overflow:hidden}
+.sb{width:var(--sw);background:var(--navy);color:#fff;display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-logo{padding:16px 18px 12px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.sb-mark{width:30px;height:30px;background:var(--accent);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px}
+.sb-name{font-size:12px;font-weight:700;letter-spacing:.3px}
+.sb-sub{font-size:10px;opacity:.45}
+.nav-sec{padding:10px 0 2px}
+.nav-lbl{font-size:9px;font-weight:700;letter-spacing:1.2px;color:rgba(255,255,255,.3);padding:0 18px 5px;text-transform:uppercase}
+.nav-it{display:flex;align-items:center;gap:9px;padding:8px 18px;cursor:pointer;font-size:12px;font-weight:500;color:rgba(255,255,255,.7);border-left:3px solid transparent;transition:all .12s}
+.nav-it:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-it.on{background:rgba(42,127,232,.18);color:#fff;border-left-color:var(--accent)}
+.nav-it svg{width:14px;height:14px;flex-shrink:0}
+.nb{margin-left:auto;background:var(--red);font-size:9px;font-weight:700;padding:1px 5px;border-radius:8px}
+.sb-foot{margin-top:auto;padding:12px 18px;border-top:1px solid rgba(255,255,255,.08)}
+.ua{display:flex;align-items:center;gap:9px}
+.av{width:30px;height:30px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.un{font-size:12px;font-weight:600}.ur{font-size:10px;opacity:.45}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:var(--hh);background:var(--white);border-bottom:1px solid var(--g2);display:flex;align-items:center;padding:0 22px;gap:14px;flex-shrink:0;box-shadow:var(--sh)}
+.tb-bc{font-size:12px;color:var(--g4)}.tb-bc b{color:var(--text)}
+.tb-r{margin-left:auto;display:flex;align-items:center;gap:10px}
+.tb-date{font-size:11px;color:var(--g3)}
+.ico-btn{width:32px;height:32px;border:1px solid var(--g2);background:var(--white);border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--g4);position:relative}
+.ico-btn:hover{background:var(--g1)}
+.dot{position:absolute;top:5px;right:5px;width:6px;height:6px;background:var(--red);border-radius:50%;border:1px solid #fff}
+.content{flex:1;overflow-y:auto;padding:22px}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
+.ph h1{font-size:18px;font-weight:700}
+.ph p{font-size:11px;color:var(--g4);margin-top:2px}
+.btns{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--r);font-size:12px;font-weight:600;cursor:pointer;border:none;transition:background .12s}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover{background:var(--accent2)}
+.btn-o{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn-o:hover{background:#EBF3FD}
+.btn-g{background:var(--green);color:#fff}.btn-g:hover{background:#18a36c}
+.btn-r{background:var(--red);color:#fff}.btn-r:hover{background:#c93030}
+.btn-sm{padding:5px 10px;font-size:11px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px}
+.kc{background:var(--white);border-radius:var(--r);padding:16px;box-shadow:var(--sh);border-top:3px solid var(--g2)}
+.kc.bl{border-color:var(--accent)}.kc.gr{border-color:var(--green)}.kc.rd{border-color:var(--red)}.kc.yl{border-color:var(--yellow)}.kc.pu{border-color:var(--purple)}
+.kl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--g4);margin-bottom:8px}
+.kv{font-size:22px;font-weight:800;letter-spacing:-.5px}
+.kf{font-size:11px;color:var(--g3);margin-top:5px}
+.kd{font-size:10px;font-weight:700;padding:1px 5px;border-radius:2px}
+.ku{background:#E6FAF2;color:#1a9c67}.kdn{background:#FDEAEA;color:#b83030}
+.card{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:16px}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--g2)}
+.card-title{font-size:13px;font-weight:700}
+.card-sub{font-size:11px;color:var(--g4);margin-top:1px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--g4);padding:9px 18px;text-align:left;border-bottom:1px solid var(--g2);white-space:nowrap;background:var(--g1)}
+td{padding:11px 18px;font-size:12px;border-bottom:1px solid var(--g2);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--g1)}
+.mono{font-family:monospace;font-size:11px}
+.tr-total td{background:var(--g1);font-weight:700;border-top:2px solid var(--g2)}
+.tr-group td{background:#EBF3FD;font-weight:700;font-size:11px;color:var(--navy);letter-spacing:.3px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:700}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%}
+.b-ok{background:#E6FAF2;color:#1a9c67}.b-ok::before{background:var(--green)}
+.b-pend{background:#FEF6E6;color:#b87a10}.b-pend::before{background:var(--yellow)}
+.b-err{background:#FDEAEA;color:#b83030}.b-err::before{background:var(--red)}
+.b-proc{background:#EBF3FD;color:#1a5db5}.b-proc::before{background:var(--accent)}
+.b-gray{background:var(--g2);color:var(--g4)}.b-gray::before{background:var(--g3)}
+.b-pu{background:#F3EEFF;color:#6d28d9}.b-pu::before{background:var(--purple)}
+.filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.search{display:flex;align-items:center;gap:7px;background:var(--white);border:1px solid var(--g2);border-radius:var(--r);padding:6px 12px;flex:1;min-width:180px}
+.search input{border:none;outline:none;font-size:12px;color:var(--text);width:100%;background:transparent}
+select.fsel,input.fsel{border:1px solid var(--g2);border-radius:var(--r);padding:6px 10px;font-size:12px;color:var(--g4);background:var(--white);cursor:pointer;outline:none}
+input.fsel{color:var(--text)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+.hol{background:var(--white);border:1px solid var(--g2);border-radius:var(--r);max-width:640px;margin:0 auto;box-shadow:var(--sh2)}
+.hol-head{background:var(--navy);color:#fff;padding:20px 24px;border-radius:var(--r) var(--r) 0 0}
+.hol-head h2{font-size:15px;font-weight:800}
+.hol-head p{font-size:11px;opacity:.6;margin-top:2px}
+.hol-emp{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px;padding:16px 24px;border-bottom:1px solid var(--g2);background:var(--g1)}
+.hol-emp .fe{font-size:10px;color:var(--g4);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.hol-emp .fv{font-size:12px;font-weight:600;margin-top:1px}
+.hol-section{padding:12px 24px}
+.hol-section h3{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--g4);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--g2)}
+.hol-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;border-bottom:1px solid rgba(0,0,0,.04)}
+.hol-row:last-child{border-bottom:none}
+.hol-row.bold{font-weight:700;font-size:13px}
+.hol-row .desc{color:var(--text)}
+.hol-row .ref{color:var(--g4);font-size:11px;text-align:center;width:60px}
+.hol-row .val{font-weight:600;text-align:right;min-width:90px}
+.hol-row .val.plus{color:var(--green)}
+.hol-row .val.minus{color:var(--red)}
+.hol-total{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;background:var(--navy);color:#fff;border-radius:0 0 var(--r) var(--r)}
+.hol-total .tl{font-size:13px;font-weight:700}
+.hol-total .tv{font-size:20px;font-weight:800}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--white);border-radius:var(--r);width:600px;max-width:96vw;max-height:92vh;overflow-y:auto;box-shadow:var(--sh2)}
+.modal-hdr{padding:16px 22px;border-bottom:1px solid var(--g2);display:flex;align-items:center;justify-content:space-between}
+.modal-hdr h2{font-size:15px;font-weight:700}
+.close-btn{width:28px;height:28px;border:none;background:var(--g2);border-radius:var(--r);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.modal-body{padding:20px 22px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg.full{grid-column:1/-1}
+label{font-size:11px;font-weight:700;color:var(--g4);text-transform:uppercase;letter-spacing:.4px}
+input,select,textarea{border:1px solid var(--g2);border-radius:var(--r);padding:7px 10px;font-size:12px;color:var(--text);outline:none;transition:border .12s;background:var(--white)}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--g2);display:flex;justify-content:flex-end;gap:8px}
+.calc-box{background:var(--g1);border:1px solid var(--g2);border-radius:var(--r);padding:14px;margin-top:10px}
+.calc-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;border-bottom:1px solid var(--g2)}
+.calc-row:last-child{border-bottom:none;font-weight:700;font-size:13px;padding-top:8px}
+.calc-plus{color:var(--green)}.calc-minus{color:var(--red)}
+.fer-row{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid var(--g2);gap:10px;flex-wrap:wrap}
+.fer-row:last-child{border-bottom:none}
+.fer-bar-wrap{width:160px;height:8px;background:var(--g2);border-radius:4px;overflow:hidden;display:inline-block;vertical-align:middle}
+.fer-bar{height:100%;border-radius:4px}
+.lanc-preview{background:var(--g1);border:1px solid var(--g2);border-radius:var(--r);padding:14px;margin-top:12px}
+.lanc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;border-bottom:1px solid var(--g2)}
+.lanc-row:last-child{border-bottom:none;font-weight:700}
+.val-d{color:var(--red);font-weight:700}
+.val-c{color:var(--green);font-weight:700}
+.dre-table td.nivel1{font-weight:700;font-size:13px;padding-left:18px}
+.dre-table td.nivel2{padding-left:32px;color:var(--g4)}
+.dre-table .sep{height:6px;background:var(--bg)}
+.dre-table .resultado{background:var(--navy);color:#fff;font-weight:800}
+.dre-table .resultado td{color:#fff}
+.balanco-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.bal-side{border-right:1px solid var(--g2)}
+.bal-side:last-child{border-right:none}
+.bal-group-hdr{background:var(--navy);color:#fff;padding:8px 18px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.bal-item{display:flex;justify-content:space-between;padding:7px 18px;border-bottom:1px solid var(--g2);font-size:12px}
+.bal-item:hover{background:var(--g1)}
+.bal-item.sub{padding-left:32px;color:var(--g4)}
+.bal-item.total{font-weight:700;background:var(--g1);border-top:2px solid var(--g2)}
+.bal-item.grand{font-weight:800;background:var(--navy);color:#fff}
+.pc-grupo{margin-bottom:4px}
+.pc-hdr{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--g1);border:1px solid var(--g2);border-radius:var(--r);cursor:pointer;font-weight:700;font-size:12px}
+.pc-hdr:hover{background:var(--g2)}
+.pc-arrow{transition:transform .15s;font-size:10px}
+.pc-arrow.open{transform:rotate(90deg)}
+.pc-children{display:none;padding-left:20px}
+.pc-children.open{display:block}
+.pc-item{display:flex;align-items:center;gap:10px;padding:7px 14px;border-left:2px solid var(--g2);margin-top:2px;font-size:12px;background:var(--white);border-radius:0 var(--r) var(--r) 0}
+.pc-item:hover{background:var(--g1);border-left-color:var(--accent)}
+.pc-code{font-family:monospace;font-size:11px;color:var(--g4);width:90px;flex-shrink:0}
+.pc-tipo{font-size:10px;font-weight:700;padding:1px 6px;border-radius:2px;margin-left:auto}
+.tipo-d{background:#FDEAEA;color:var(--red)}
+.tipo-c{background:#E6FAF2;color:var(--green)}
+.tipo-a{background:#EBF3FD;color:var(--accent)}
+.tipo-p{background:#FEF6E6;color:var(--yellow)}
+.tipo-r{background:#F3EEFF;color:var(--purple)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:12px 18px;border-radius:var(--r);font-size:13px;font-weight:600;box-shadow:var(--sh2);z-index:200;transform:translateY(60px);opacity:0;transition:all .25s}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.ok{border-left:3px solid var(--green)}.toast.err{border-left:3px solid var(--red)}
+.pane{display:none}.pane.on{display:block}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--g2);border-radius:3px}
+/* Agentes IA */
+.msg-ai,.msg-user{display:flex;gap:8px}
+.msg-user{justify-content:flex-end}
+.msg-bubble{max-width:75%;padding:10px 14px;border-radius:8px;font-size:13px;line-height:1.5}
+.msg-bubble-ai{background:var(--g1);border:1px solid var(--g2);color:var(--navy)}
+.msg-bubble-user{background:var(--accent);color:#fff}
+.msg-typing{display:flex;gap:4px;align-items:center;padding:12px 14px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--g4);animation:blink 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.btn-sm{padding:4px 10px;font-size:11px}
+.b-gray{background:var(--g2);color:var(--g4)}
+.b-gray::before{background:var(--g4)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR UNIFICADA -->
+<nav class="sb">
+  <div class="sb-logo">
+    <div class="sb-mark">ERP</div>
+    <div><div class="sb-name">ERP CORPORATIVO</div><div class="sb-sub">Global Ultimate</div></div>
+  </div>
+  <div class="nav-sec">
+    <div class="nav-lbl">RH & Pessoas</div>
+    <div class="nav-it on" onclick="nav('colaboradores',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Colaboradores
+    </div>
+    <div class="nav-it" onclick="nav('folha',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      Folha de Pagamento
+    </div>
+    <div class="nav-it" onclick="nav('holerite',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Holerites
+    </div>
+    <div class="nav-it" onclick="nav('ponto',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Ponto Eletrônico
+    </div>
+    <div class="nav-it" onclick="nav('ferias',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Férias
+      <span class="nb">3</span>
+    </div>
+    <div class="nav-it" onclick="nav('admissao',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Admissão / Demissão
+    </div>
+    <div class="nav-it" onclick="nav('esocial',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      eSocial
+    </div>
+  </div>
+  <div class="nav-sec">
+    <div class="nav-lbl">Contabilidade</div>
+    <div class="nav-it" onclick="nav('lancamentos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Lançamentos
+    </div>
+    <div class="nav-it" onclick="nav('razao',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Razão Geral
+    </div>
+    <div class="nav-it" onclick="nav('plano',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      Plano de Contas
+    </div>
+    <div class="nav-it" onclick="nav('balancete',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Balancete
+    </div>
+    <div class="nav-it" onclick="nav('dre',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      DRE
+    </div>
+    <div class="nav-it" onclick="nav('balanco',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Balanço Patrimonial
+    </div>
+  </div>
+  <div class="nav-sec">
+    <div class="nav-lbl">Jurídico</div>
+    <div class="nav-it" onclick="nav('juridico-processos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      Processos Judiciais
+    </div>
+    <div class="nav-it" onclick="nav('juridico-contratos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Contratos
+    </div>
+    <div class="nav-it" onclick="nav('juridico-prazos',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Controle de Prazos <span class="nb" id="nb-prazos">3</span>
+    </div>
+    <div class="nav-it" onclick="nav('juridico-pareceres',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Pareceres
+    </div>
+    <div class="nav-it" onclick="nav('juridico-compliance',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      Compliance Jurídico
+    </div>
+  </div>
+  <div class="nav-sec">
+    <div class="nav-lbl">Agentes de IA</div>
+    <div class="nav-it" onclick="nav('ia-central',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      Central de Agentes
+    </div>
+    <div class="nav-it" onclick="nav('ia-fiscal',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+      Agente Fiscal
+    </div>
+    <div class="nav-it" onclick="nav('ia-financeiro',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+      Agente Financeiro
+    </div>
+    <div class="nav-it" onclick="nav('ia-rh',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Agente RH
+    </div>
+    <div class="nav-it" onclick="nav('ia-juridico',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+      Agente Jurídico
+    </div>
+    <div class="nav-it" onclick="nav('ia-contabil',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Agente Contábil
+    </div>
+  </div>
+  <div class="sb-foot">
+    <div class="ua">
+      <div class="av">MA</div>
+      <div><div class="un">Marcos Alves</div><div class="ur">Admin · Contador</div></div>
+    </div>
+  </div>
+</nav>
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="tb-bc">ERP Global › RH › <b id="bc-title">Colaboradores</b></div>
+    <div class="tb-r">
+      <div class="tb-date" id="topdate"></div>
+      <div class="ico-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="dot"></span></div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══ COLABORADORES ══ -->
+    <div id="pane-colaboradores" class="pane on">
+      <div class="ph">
+        <div><h1>Colaboradores</h1><p>Quadro ativo · <span id="qtd-colab">0</span> funcionários</p></div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="exportarCSV()">↓ Exportar</button>
+          <button class="btn btn-p" onclick="abrirModal('modal-admissao')">+ Novo Colaborador</button>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpis">
+        <div class="kc bl"><div class="kl">Total Ativos</div><div class="kv" id="kpi-ativos">0</div><div class="kf">Funcionários CLT</div></div>
+        <div class="kc gr"><div class="kl">Admissões/Mês</div><div class="kv">4</div><div class="kf"><span class="kd ku">▲ 2</span> vs. anterior</div></div>
+        <div class="kc rd"><div class="kl">Demissões/Mês</div><div class="kv">1</div><div class="kf"><span class="kd kdn">▼ 1</span> vs. anterior</div></div>
+        <div class="kc yl"><div class="kl">Em Férias</div><div class="kv" id="kpi-ferias">0</div><div class="kf">Período atual</div></div>
+        <div class="kc pu"><div class="kl">Massa Salarial</div><div class="kv" id="kpi-massa">—</div><div class="kf">Salários brutos</div></div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="filters">
+        <div class="search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="busca-colab" placeholder="Buscar por nome, cargo, CPF..." oninput="renderColab()"></div>
+        <select class="fsel" id="fil-dept" onchange="renderColab()">
+          <option value="">Todos os departamentos</option>
+          <option>Contabilidade</option><option>Fiscal</option><option>Financeiro</option>
+          <option>RH</option><option>TI</option><option>Comercial</option><option>Operações</option><option>Diretoria</option>
+        </select>
+        <select class="fsel" id="fil-status" onchange="renderColab()">
+          <option value="">Todos os status</option>
+          <option>Ativo</option><option>Férias</option><option>Afastado</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Matrícula</th><th>Nome</th><th>Cargo</th><th>Departamento</th><th>Admissão</th><th>Salário Bruto</th><th>Status</th><th>Ações</th></tr></thead>
+            <tbody id="tbody-colab"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ FOLHA ══ -->
+    <div id="pane-folha" class="pane">
+      <div class="ph">
+        <div><h1>Folha de Pagamento</h1><p>Competência: <b>Junho/2025</b></p></div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="calcularFolha()">↻ Recalcular</button>
+          <button class="btn btn-g" onclick="fecharFolha()">✓ Fechar Folha</button>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kc bl"><div class="kl">Salários Brutos</div><div class="kv" id="f-bruto">—</div><div class="kf">Total da folha</div></div>
+        <div class="kc rd"><div class="kl">INSS Empregado</div><div class="kv" id="f-inss">—</div><div class="kf">Desc. colaboradores</div></div>
+        <div class="kc rd"><div class="kl">IRRF Total</div><div class="kv" id="f-irrf">—</div><div class="kf">Imposto de renda</div></div>
+        <div class="kc yl"><div class="kl">FGTS (Empresa)</div><div class="kv" id="f-fgts">—</div><div class="kf">8% sobre brutos</div></div>
+        <div class="kc gr"><div class="kl">Líquido a Pagar</div><div class="kv" id="f-liq">—</div><div class="kf">Total líquido</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-hdr">
+          <div><div class="card-title">Resumo Individual — Junho/2025</div><div class="card-sub">Cálculos com tabela INSS/IRRF vigente 2025</div></div>
+          <div class="btns"><select class="fsel" id="fil-folha-dept" onchange="renderFolha()"><option value="">Todos depts</option><option>Contabilidade</option><option>Fiscal</option><option>Financeiro</option><option>RH</option><option>TI</option><option>Comercial</option><option>Operações</option><option>Diretoria</option></select></div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Matrícula</th><th>Nome</th><th>Departamento</th><th>Salário Base</th><th>Adicionais</th><th>Bruto</th><th>INSS</th><th>IRRF</th><th>Líquido</th><th>FGTS</th><th>Holerite</th></tr></thead>
+            <tbody id="tbody-folha"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ HOLERITE ══ -->
+    <div id="pane-holerite" class="pane">
+      <div class="ph">
+        <div><h1>Holerites</h1><p>Selecione o colaborador e competência</p></div>
+        <div class="btns"><button class="btn btn-o" onclick="window.print()">⎙ Imprimir</button></div>
+      </div>
+      <div class="g2" style="margin-bottom:18px">
+        <div class="fg"><label>Colaborador</label>
+          <select id="sel-hol-emp" onchange="renderHolerite()"><option value="">— Selecione —</option></select>
+        </div>
+        <div class="fg"><label>Competência</label>
+          <select id="sel-hol-comp" onchange="renderHolerite()">
+            <option value="2025-06">Junho/2025</option>
+            <option value="2025-05">Maio/2025</option>
+            <option value="2025-04">Abril/2025</option>
+          </select>
+        </div>
+      </div>
+      <div id="hol-container"><p style="color:var(--g4);font-size:13px;text-align:center;padding:40px">Selecione um colaborador para visualizar o holerite.</p></div>
+    </div>
+
+    <!-- ══ PONTO ══ -->
+    <div id="pane-ponto" class="pane">
+      <div class="ph">
+        <div><h1>Ponto Eletrônico</h1><p>Junho/2025</p></div>
+        <div class="btns"><button class="btn btn-p" onclick="showToast('Relatório de ponto exportado','ok')">↓ Exportar Relatório</button></div>
+      </div>
+      <div class="filters">
+        <div class="search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="busca-ponto" placeholder="Buscar colaborador..." oninput="renderPonto()"></div>
+        <select class="fsel" id="fil-ponto-dept" onchange="renderPonto()"><option value="">Todos os depts</option><option>Contabilidade</option><option>Fiscal</option><option>Financeiro</option><option>RH</option><option>TI</option><option>Comercial</option><option>Operações</option><option>Diretoria</option></select>
+      </div>
+      <div class="card">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Colaborador</th><th>Departamento</th><th>Dias Trabalhados</th><th>Horas Normais</th><th>Horas Extras</th><th>Faltas</th><th>Atrasos</th><th>Banco Horas</th></tr></thead>
+            <tbody id="tbody-ponto"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ FÉRIAS ══ -->
+    <div id="pane-ferias" class="pane">
+      <div class="ph">
+        <div><h1>Gestão de Férias</h1><p>Controle de período aquisitivo e gozo</p></div>
+        <div class="btns"><button class="btn btn-p" onclick="abrirModal('modal-ferias')">+ Agendar Férias</button></div>
+      </div>
+      <div class="g3">
+        <div class="kc gr"><div class="kl">Em Gozo Agora</div><div class="kv" id="kpi-ferias2">0</div><div class="kf">Colaboradores</div></div>
+        <div class="kc yl"><div class="kl">Agendadas (30d)</div><div class="kv">5</div><div class="kf">Próximas saídas</div></div>
+        <div class="kc rd"><div class="kl">Período Vencido</div><div class="kv">2</div><div class="kf">Ação necessária</div></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div class="card-title">Situação de Férias por Colaborador</div></div>
+        <div id="lista-ferias"></div>
+      </div>
+    </div>
+
+    <!-- ══ ADMISSÃO/DEMISSÃO ══ -->
+    <div id="pane-admissao" class="pane">
+      <div class="ph">
+        <div><h1>Admissão & Demissão</h1><p>Registro de movimentações de pessoal</p></div>
+        <div class="btns">
+          <button class="btn btn-g" onclick="abrirModal('modal-admissao')">+ Admitir</button>
+          <button class="btn btn-r" onclick="abrirModal('modal-demissao')">− Demitir</button>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="card-hdr"><div><div class="card-title">Admissões — 2025</div></div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Nome</th><th>Cargo</th><th>Departamento</th><th>Data Admissão</th><th>Salário</th><th>Tipo Contrato</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Lucas Pereira</td><td>Analista Fiscal</td><td>Fiscal</td><td>02/06/2025</td><td>R$ 6.800</td><td>CLT</td><td><span class="badge b-ok">Ativo</span></td></tr>
+            <tr><td>Fernanda Ramos</td><td>Dev Frontend</td><td>TI</td><td>12/05/2025</td><td>R$ 9.500</td><td>CLT</td><td><span class="badge b-ok">Ativo</span></td></tr>
+            <tr><td>Diego Matos</td><td>Assistente Comercial</td><td>Comercial</td><td>03/04/2025</td><td>R$ 3.200</td><td>CLT</td><td><span class="badge b-ok">Ativo</span></td></tr>
+            <tr><td>Patrícia Oliveira</td><td>Coord. RH</td><td>RH</td><td>01/03/2025</td><td>R$ 8.400</td><td>CLT</td><td><span class="badge b-ok">Ativo</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div><div class="card-title">Demissões — 2025</div></div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Nome</th><th>Cargo</th><th>Departamento</th><th>Data Demissão</th><th>Tipo</th><th>Aviso Prévio</th><th>Status</th><th>Rescisão Líq.</th><th>Termo</th></tr></thead>
+          <tbody>
+            <tr><td><b>André Costa</b></td><td>Analista Contábil</td><td>Contabilidade</td><td>15/05/2025</td><td>Pedido Demissão</td><td>Indenizado</td><td><span class="badge b-ok">Paga</span></td><td style="font-weight:700;color:var(--red)">R$ 8.240,00</td><td><button class="btn btn-o btn-sm">Termo</button></td></tr>
+            <tr><td><b>Bianca Sousa</b></td><td>Assistente Fiscal</td><td>Fiscal</td><td>28/04/2025</td><td>Sem Justa Causa</td><td>Trabalhado</td><td><span class="badge b-ok">Paga</span></td><td style="font-weight:700;color:var(--red)">R$ 6.120,00</td><td><button class="btn btn-o btn-sm">Termo</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ══ eSocial ══ -->
+    <div id="pane-esocial" class="pane">
+      <div class="ph">
+        <div><h1>eSocial</h1><p>Eventos trabalhistas · Transmissão ao governo</p></div>
+        <div class="btns"><button class="btn btn-p" onclick="showToast('Transmissão iniciada para o eSocial','ok')">▶ Transmitir Pendentes</button></div>
+      </div>
+      <div class="kpis">
+        <div class="kc gr"><div class="kl">Transmitidos</div><div class="kv">148</div><div class="kf">Eventos no mês</div></div>
+        <div class="kc yl"><div class="kl">Pendentes</div><div class="kv">7</div><div class="kf">Aguardando envio</div></div>
+        <div class="kc rd"><div class="kl">Erros/Rejeições</div><div class="kv">2</div><div class="kf">Necessitam correção</div></div>
+        <div class="kc bl"><div class="kl">Retificações</div><div class="kv">3</div><div class="kf">No período</div></div>
+        <div class="kc pu"><div class="kl">Último Envio</div><div class="kv" style="font-size:14px">17/06 09:42</div><div class="kf">Status: OK</div></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div class="card-title">Fila de Eventos eSocial</div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Evento</th><th>Tipo</th><th>Colaborador</th><th>Competência</th><th>Gerado em</th><th>Status</th><th>Ação</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">S-1200</td><td>Remuneração</td><td>Todos (312)</td><td>Jun/2025</td><td>17/06 08:00</td><td><span class="badge b-pend">Pendente</span></td><td><button class="btn btn-p btn-sm" onclick="showToast('S-1200 transmitido com sucesso','ok')">Enviar</button></td></tr>
+            <tr><td class="mono">S-2200</td><td>Admissão</td><td>Lucas Pereira</td><td>Jun/2025</td><td>02/06 14:22</td><td><span class="badge b-ok">Transmitido</span></td><td><button class="btn btn-o btn-sm">Recibo</button></td></tr>
+            <tr><td class="mono">S-2200</td><td>Admissão</td><td>Fernanda Ramos</td><td>Mai/2025</td><td>12/05 09:10</td><td><span class="badge b-ok">Transmitido</span></td><td><button class="btn btn-o btn-sm">Recibo</button></td></tr>
+            <tr><td class="mono">S-2299</td><td>Demissão</td><td>André Costa</td><td>Mai/2025</td><td>15/05 16:30</td><td><span class="badge b-ok">Transmitido</span></td><td><button class="btn btn-o btn-sm">Recibo</button></td></tr>
+            <tr><td class="mono">S-1210</td><td>Pagamento</td><td>Todos (312)</td><td>Jun/2025</td><td>17/06 08:05</td><td><span class="badge b-pend">Pendente</span></td><td><button class="btn btn-p btn-sm" onclick="showToast('S-1210 transmitido com sucesso','ok')">Enviar</button></td></tr>
+            <tr><td class="mono">S-2230</td><td>Afastamento</td><td>Marcos Vieira</td><td>Jun/2025</td><td>10/06 11:00</td><td><span class="badge b-err">Rejeitado</span></td><td><button class="btn btn-r btn-sm" onclick="showToast('Verifique o campo CID no evento S-2230','err')">Corrigir</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    <div id="pane-lancamentos" class="pane on">
+      <div class="ph">
+        <div><h1>Lançamentos Contábeis</h1><p>Competência: <b>Junho/2025</b> · <span id="qtd-lanc">0</span> lançamentos</p></div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="exportarLanc()">↓ Exportar</button>
+          <button class="btn btn-p" onclick="abrirModal('modal-lanc')">+ Novo Lançamento</button>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="kc bl"><div class="kl">Total Débitos</div><div class="kv" id="kpi-deb">—</div><div class="kf">Mês corrente</div></div>
+        <div class="kc gr"><div class="kl">Total Créditos</div><div class="kv" id="kpi-cred">—</div><div class="kf">Mês corrente</div></div>
+    </div>
+        <div class="kc yl"><div class="kl">Partidas Dobradas</div><div class="kv" id="kpi-eq">✓</div><div class="kf">Débitos = Créditos</div></div>
+        <div class="kc pu"><div class="kl">Lançamentos</div><div class="kv" id="kpi-nlanc">0</div><div class="kf">No período</div></div>
+      </div>
+
+      <div class="filters">
+        <div class="search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="busca-lanc" placeholder="Buscar por histórico, conta..." oninput="renderLancamentos()">
+        </div>
+        <select class="fsel" id="fil-lanc-tipo" onchange="renderLancamentos()">
+          <option value="">Todos os tipos</option>
+          <option value="receita">Receita</option>
+          <option value="despesa">Despesa</option>
+          <option value="transferencia">Transferência</option>
+          <option value="ajuste">Ajuste</option>
+        </select>
+        <input class="fsel" type="month" id="fil-lanc-mes" value="2025-06" onchange="renderLancamentos()">
+      </div>
+
+      <div class="card">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Nº</th><th>Data</th><th>Histórico</th><th>Conta Débito</th><th>Conta Crédito</th><th>Valor</th><th>Tipo</th><th>Usuário</th></tr></thead>
+            <tbody id="tbody-lanc"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RAZÃO ══ -->
+    <div id="pane-razao" class="pane">
+      <div class="ph">
+        <div><h1>Razão Geral</h1><p>Movimentações por conta contábil</p></div>
+        <div class="btns"><button class="btn btn-o" onclick="showToast('Razão exportado em PDF','ok')">↓ PDF</button></div>
+      </div>
+      <div class="filters">
+        <select class="fsel" id="sel-razao-conta" onchange="renderRazao()" style="min-width:280px">
+          <option value="">— Selecione a conta —</option>
+        </select>
+        <input class="fsel" type="month" id="fil-razao-mes" value="2025-06" onchange="renderRazao()">
+      </div>
+      <div id="razao-kpis" class="kpis" style="display:none">
+        <div class="kc gr"><div class="kl">Saldo Anterior</div><div class="kv" id="r-saldo-ant">—</div></div>
+        <div class="kc bl"><div class="kl">Total Débitos</div><div class="kv" id="r-tot-deb">—</div></div>
+        <div class="kc rd"><div class="kl">Total Créditos</div><div class="kv" id="r-tot-cred">—</div></div>
+        <div class="kc yl"><div class="kl">Saldo Atual</div><div class="kv" id="r-saldo-at">—</div></div>
+      </div>
+      <div class="card" id="razao-card" style="display:none">
+        <div class="card-hdr">
+          <div><div class="card-title" id="razao-titulo">—</div><div class="card-sub" id="razao-natureza">—</div></div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Data</th><th>Histórico</th><th>Débito</th><th>Crédito</th><th>Saldo</th></tr></thead>
+            <tbody id="tbody-razao"></tbody>
+          </table>
+        </div>
+      </div>
+      <div id="razao-empty" style="text-align:center;padding:40px;color:var(--g4);font-size:13px">Selecione uma conta para visualizar o razão.</div>
+    </div>
+
+    <!-- ══ PLANO DE CONTAS ══ -->
+    <div id="pane-plano" class="pane">
+      <div class="ph">
+        <div><h1>Plano de Contas</h1><p>Estrutura contábil · <span id="qtd-contas">0</span> contas cadastradas</p></div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="showToast('Plano exportado','ok')">↓ Exportar</button>
+          <button class="btn btn-p" onclick="abrirModal('modal-conta')">+ Nova Conta</button>
+        </div>
+      </div>
+      <div class="filters">
+        <div class="search"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="busca-plano" placeholder="Buscar conta..." oninput="renderPlano()">
+        </div>
+        <select class="fsel" id="fil-plano-tipo" onchange="renderPlano()">
+          <option value="">Todos os tipos</option>
+          <option value="A">Ativo</option><option value="P">Passivo</option>
+          <option value="R">Receita</option><option value="D">Despesa</option>
+          <option value="PL">Patrimônio Líquido</option>
+        </select>
+      </div>
+      <div id="plano-container"></div>
+    </div>
+
+    <!-- ══ BALANCETE ══ -->
+    <div id="pane-balancete" class="pane">
+      <div class="ph">
+        <div><h1>Balancete de Verificação</h1><p>Competência: Junho/2025</p></div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="showToast('Balancete exportado','ok')">↓ Exportar</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr">
+          <div><div class="card-title">Balancete Analítico — Jun/2025</div><div class="card-sub" id="bal-status">Verificando equilíbrio...</div></div>
+        </div>
+        <div class="tbl-wrap">
+          <table id="tbl-balancete">
+            <thead><tr><th>Código</th><th>Conta</th><th>Saldo Anterior D</th><th>Saldo Anterior C</th><th>Mov. Débito</th><th>Mov. Crédito</th><th>Saldo Atual D</th><th>Saldo Atual C</th></tr></thead>
+            <tbody id="tbody-balancete"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ DRE ══ -->
+    <div id="pane-dre" class="pane">
+      <div class="ph">
+        <div><h1>Demonstração do Resultado</h1><p>Exercício: Janeiro–Junho/2025</p></div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="showToast('DRE exportada em PDF','ok')">↓ PDF</button>
+          <button class="btn btn-o" onclick="showToast('DRE exportada em Excel','ok')">↓ Excel</button>
+        </div>
+      </div>
+      <div class="g2">
+        <div class="card">
+          <div class="card-hdr"><div class="card-title">DRE — Jan a Jun/2025</div></div>
+          <div class="tbl-wrap"><table class="dre-table" id="tbl-dre"></table></div>
+        </div>
+        <div>
+          <div class="kpis" style="grid-template-columns:1fr 1fr;margin-bottom:16px">
+            <div class="kc gr"><div class="kl">Receita Bruta</div><div class="kv" id="dre-rec">—</div></div>
+            <div class="kc rd"><div class="kl">Custo Total</div><div class="kv" id="dre-cus">—</div></div>
+            <div class="kc bl"><div class="kl">Lucro Bruto</div><div class="kv" id="dre-lb">—</div></div>
+            <div class="kc pu"><div class="kl">Lucro Líquido</div><div class="kv" id="dre-ll">—</div></div>
+          </div>
+          <div class="card">
+            <div class="card-hdr"><div class="card-title">Margem de Contribuição</div></div>
+            <div style="padding:14px 18px" id="dre-margens"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ BALANÇO ══ -->
+    <div id="pane-balanco" class="pane">
+      <div class="ph">
+        <div><h1>Balanço Patrimonial</h1><p>Posição: 30/06/2025</p></div>
+        <div class="btns"><button class="btn btn-o" onclick="showToast('Balanço exportado em PDF','ok')">↓ PDF</button></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr">
+          <div><div class="card-title">Balanço Patrimonial — 30/06/2025</div></div>
+          <div id="bal-equil" style="font-size:12px;font-weight:700;color:var(--green)">✓ Balanço equilibrado</div>
+        </div>
+        <div class="balanco-wrap" id="balanco-wrap"></div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: PROCESSOS JUDICIAIS ══ -->
+    <div id="pane-juridico-processos" class="pane">
+      <div class="ph">
+        <div><h1>Processos Judiciais</h1><p>Acompanhamento e gestão de ações judiciais ativas</p></div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="alert('Exportar relatório')">⬇ Exportar</button>
+          <button class="btn btn-p" onclick="alert('Novo processo cadastrado')">＋ Novo Processo</button>
+        </div>
+      </div>
+      <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kc bl"><div class="kl">Total Ativo</div><div class="kv">47</div><div class="kf">Processos em andamento</div></div>
+        <div class="kc rd"><div class="kl">Alto Risco</div><div class="kv">8</div><div class="kf">Valor exposto acima R$100k</div></div>
+        <div class="kc yl"><div class="kl">Audiências / 30d</div><div class="kv">12</div><div class="kf">Próximas audiências</div></div>
+        <div class="kc gr"><div class="kl">Encerrados (ano)</div><div class="kv">23</div><div class="kf">Processos encerrados</div></div>
+      </div>
+      <div class="filters">
+        <div class="search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input placeholder="Buscar por número, parte, advogado…"></div>
+        <select class="fsel"><option>Todas as áreas</option><option>Trabalhista</option><option>Cível</option><option>Tributário</option><option>Contratual</option></select>
+        <select class="fsel"><option>Todos os status</option><option>Em andamento</option><option>Aguardando</option><option>Encerrado</option></select>
+        <select class="fsel"><option>Todos os riscos</option><option>Alto</option><option>Médio</option><option>Baixo</option></select>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div><div class="card-title">Processos Ativos</div><div class="card-sub">47 processos registrados</div></div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Nº Processo</th><th>Tipo</th><th>Vara/Tribunal</th><th>Parte Contrária</th><th>Advogado</th><th>Risco</th><th>Valor Causa</th><th>Próx. Prazo</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">0001234-55.2024.5.02.0001</td><td>Trabalhista</td><td>1ª Vara do Trabalho SP</td><td>João M. Silva</td><td>Dra. Ana Souza</td><td><span class="badge b-err">Alto</span></td><td>R$ 185.000</td><td><b style="color:var(--red)">02/07/2024</b></td><td><span class="badge b-proc">Em andamento</span></td></tr>
+            <tr><td class="mono">0009876-11.2023.8.26.0100</td><td>Cível</td><td>12ª Vara Cível SP</td><td>Fornecedor X Ltda</td><td>Dr. Carlos Lima</td><td><span class="badge b-pend">Médio</span></td><td>R$ 67.000</td><td>15/07/2024</td><td><span class="badge b-proc">Em andamento</span></td></tr>
+            <tr><td class="mono">5001122-33.2024.4.03.6100</td><td>Tributário</td><td>TRF 3ª Região</td><td>União Federal</td><td>Dr. Pedro Alves</td><td><span class="badge b-err">Alto</span></td><td>R$ 420.000</td><td>10/07/2024</td><td><span class="badge b-pend">Aguardando</span></td></tr>
+            <tr><td class="mono">0002345-77.2024.5.02.0050</td><td>Trabalhista</td><td>2ª Vara do Trabalho SP</td><td>Maria F. Costa</td><td>Dra. Ana Souza</td><td><span class="badge b-ok">Baixo</span></td><td>R$ 22.000</td><td>20/07/2024</td><td><span class="badge b-proc">Em andamento</span></td></tr>
+            <tr><td class="mono">0003456-88.2023.8.26.0200</td><td>Contratual</td><td>5ª Vara Cível Campinas</td><td>Cliente Y S.A.</td><td>Dr. Carlos Lima</td><td><span class="badge b-pend">Médio</span></td><td>R$ 95.000</td><td>25/07/2024</td><td><span class="badge b-proc">Em andamento</span></td></tr>
+            <tr><td class="mono">0007788-22.2022.5.02.0001</td><td>Trabalhista</td><td>1ª Vara do Trabalho SP</td><td>Roberto J. Nunes</td><td>Dra. Ana Souza</td><td><span class="badge b-ok">Baixo</span></td><td>R$ 14.500</td><td>—</td><td><span class="badge b-gray">Encerrado</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: CONTRATOS ══ -->
+    <div id="pane-juridico-contratos" class="pane">
+      <div class="ph">
+        <div><h1>Contratos</h1><p>Gestão centralizada de contratos ativos e vencidos</p></div>
+        <div class="btns">
+          <button class="btn btn-o">⬇ Exportar</button>
+          <button class="btn btn-p" onclick="alert('Novo contrato cadastrado')">＋ Novo Contrato</button>
+        </div>
+      </div>
+      <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kc bl"><div class="kl">Ativos</div><div class="kv">134</div><div class="kf">Contratos vigentes</div></div>
+        <div class="kc yl"><div class="kl">Vencem em 30d</div><div class="kv">11</div><div class="kf">Requerem atenção</div></div>
+        <div class="kc rd"><div class="kl">Vencidos</div><div class="kv">4</div><div class="kf">Aguardando renovação</div></div>
+        <div class="kc gr"><div class="kl">Valor Total</div><div class="kv">R$ 8,4M</div><div class="kf">Carteira contratual ativa</div></div>
+      </div>
+      <div class="filters">
+        <div class="search"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input placeholder="Buscar contrato, parte, objeto…"></div>
+        <select class="fsel"><option>Todos os tipos</option><option>Fornecedor</option><option>Cliente</option><option>Locação</option><option>Prestação de Serviço</option><option>Parceria</option></select>
+        <select class="fsel"><option>Todos os status</option><option>Ativo</option><option>Vence em 30d</option><option>Vencido</option><option>Encerrado</option></select>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div><div class="card-title">Contratos Registrados</div><div class="card-sub">134 contratos ativos</div></div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Nº Contrato</th><th>Tipo</th><th>Parte</th><th>Objeto</th><th>Vigência</th><th>Valor Mensal</th><th>Responsável</th><th>Status</th><th>Ações</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">CTR-2024-001</td><td>Fornecedor</td><td>Tech Solutions Ltda</td><td>Licença ERP</td><td>01/01/24 – 31/12/24</td><td>R$ 12.500</td><td>Dr. Carlos Lima</td><td><span class="badge b-ok">Ativo</span></td><td><button class="btn btn-o btn-sm">Ver</button></td></tr>
+            <tr><td class="mono">CTR-2023-045</td><td>Locação</td><td>Imobiliária Central</td><td>Sede administrativa</td><td>01/03/22 – 28/02/25</td><td>R$ 18.000</td><td>Dr. Carlos Lima</td><td><span class="badge b-pend">Vence em 30d</span></td><td><button class="btn btn-o btn-sm">Ver</button></td></tr>
+            <tr><td class="mono">CTR-2024-018</td><td>Cliente</td><td>Grupo Alfa S.A.</td><td>Consultoria Contábil</td><td>01/02/24 – 31/01/25</td><td>R$ 35.000</td><td>Dra. Ana Souza</td><td><span class="badge b-ok">Ativo</span></td><td><button class="btn btn-o btn-sm">Ver</button></td></tr>
+            <tr><td class="mono">CTR-2023-088</td><td>Prestação Serv.</td><td>Segurança Patrimonial</td><td>Vigilância sede</td><td>01/06/23 – 31/05/24</td><td>R$ 8.200</td><td>Dr. Pedro Alves</td><td><span class="badge b-err">Vencido</span></td><td><button class="btn btn-o btn-sm">Renovar</button></td></tr>
+            <tr><td class="mono">CTR-2024-032</td><td>Parceria</td><td>Distribuidora Beta</td><td>Distribuição regional</td><td>15/03/24 – 14/03/26</td><td>—</td><td>Dra. Ana Souza</td><td><span class="badge b-ok">Ativo</span></td><td><button class="btn btn-o btn-sm">Ver</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: CONTROLE DE PRAZOS ══ -->
+    <div id="pane-juridico-prazos" class="pane">
+      <div class="ph">
+        <div><h1>Controle de Prazos</h1><p>Prazos processuais e contratuais com alertas automáticos</p></div>
+        <div class="btns">
+          <button class="btn btn-p" onclick="alert('Prazo registrado')">＋ Novo Prazo</button>
+        </div>
+      </div>
+      <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kc rd"><div class="kl">Vencidos</div><div class="kv">3</div><div class="kf">Requer ação imediata</div></div>
+        <div class="kc yl"><div class="kl">Próximos 7 dias</div><div class="kv">5</div><div class="kf">Atenção urgente</div></div>
+        <div class="kc bl"><div class="kl">Próximos 30 dias</div><div class="kv">18</div><div class="kf">Em monitoramento</div></div>
+        <div class="kc gr"><div class="kl">Cumpridos (mês)</div><div class="kv">31</div><div class="kf">Prazos concluídos</div></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div><div class="card-title">Prazos Críticos</div><div class="card-sub">Ordenados por urgência</div></div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Prazo</th><th>Tipo</th><th>Processo/Contrato</th><th>Descrição</th><th>Responsável</th><th>Vencimento</th><th>Situação</th></tr></thead>
+          <tbody>
+            <tr><td>⚠️ VENCIDO</td><td>Processual</td><td class="mono">0001234-55.2024</td><td>Contestação trabalhista</td><td>Dra. Ana Souza</td><td style="color:var(--red)"><b>28/06/2024</b></td><td><span class="badge b-err">Vencido</span></td></tr>
+            <tr><td>🔴 CRÍTICO</td><td>Processual</td><td class="mono">5001122-33.2024</td><td>Recurso tributário TRF</td><td>Dr. Pedro Alves</td><td style="color:var(--red)"><b>02/07/2024</b></td><td><span class="badge b-err">Vencido</span></td></tr>
+            <tr><td>🟡 URGENTE</td><td>Contratual</td><td class="mono">CTR-2023-045</td><td>Notificação de renovação</td><td>Dr. Carlos Lima</td><td><b>05/07/2024</b></td><td><span class="badge b-pend">Pendente</span></td></tr>
+            <tr><td>🟡 URGENTE</td><td>Processual</td><td class="mono">0009876-11.2023</td><td>Manifestação cível</td><td>Dr. Carlos Lima</td><td>08/07/2024</td><td><span class="badge b-pend">Pendente</span></td></tr>
+            <tr><td>🔵 NORMAL</td><td>Processual</td><td class="mono">0002345-77.2024</td><td>Audiência trabalhista</td><td>Dra. Ana Souza</td><td>15/07/2024</td><td><span class="badge b-proc">Agendado</span></td></tr>
+            <tr><td>🔵 NORMAL</td><td>Contratual</td><td class="mono">CTR-2024-001</td><td>Revisão anual de SLA</td><td>Dr. Carlos Lima</td><td>20/07/2024</td><td><span class="badge b-proc">Agendado</span></td></tr>
+            <tr><td>🔵 NORMAL</td><td>Processual</td><td class="mono">0003456-88.2023</td><td>Audiência de conciliação</td><td>Dr. Carlos Lima</td><td>25/07/2024</td><td><span class="badge b-proc">Agendado</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: PARECERES ══ -->
+    <div id="pane-juridico-pareceres" class="pane">
+      <div class="ph">
+        <div><h1>Pareceres Jurídicos</h1><p>Consultas, opiniões legais e orientações formalizadas</p></div>
+        <div class="btns">
+          <button class="btn btn-o">⬇ Exportar</button>
+          <button class="btn btn-p" onclick="alert('Novo parecer registrado')">＋ Novo Parecer</button>
+        </div>
+      </div>
+      <div class="kpis" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kc bl"><div class="kl">Emitidos (ano)</div><div class="kv">58</div><div class="kf">Pareceres formalizados</div></div>
+        <div class="kc yl"><div class="kl">Em elaboração</div><div class="kv">6</div><div class="kf">Aguardando conclusão</div></div>
+        <div class="kc gr"><div class="kl">Solicitados (mês)</div><div class="kv">9</div><div class="kf">Novas consultas recebidas</div></td></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div><div class="card-title">Pareceres Recentes</div></div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Nº Parecer</th><th>Assunto</th><th>Área</th><th>Solicitante</th><th>Elaborado por</th><th>Data</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">PAR-2024-031</td><td>Viabilidade rescisão contratual antecipada</td><td>Contratual</td><td>Diretoria Comercial</td><td>Dr. Carlos Lima</td><td>18/06/2024</td><td><span class="badge b-ok">Concluído</span></td></tr>
+            <tr><td class="mono">PAR-2024-030</td><td>Análise tributária — créditos PIS/COFINS</td><td>Tributário</td><td>Controladoria</td><td>Dr. Pedro Alves</td><td>15/06/2024</td><td><span class="badge b-ok">Concluído</span></td></tr>
+            <tr><td class="mono">PAR-2024-029</td><td>Regularidade societária para licitação</td><td>Societário</td><td>Gestão Comercial</td><td>Dra. Ana Souza</td><td>12/06/2024</td><td><span class="badge b-ok">Concluído</span></td></tr>
+            <tr><td class="mono">PAR-2024-032</td><td>Impacto LGPD em novo produto digital</td><td>Digital/LGPD</td><td>Tecnologia</td><td>Dr. Carlos Lima</td><td>17/06/2024</td><td><span class="badge b-pend">Em elaboração</span></td></tr>
+            <tr><td class="mono">PAR-2024-033</td><td>Classificação trabalhista prestadores</td><td>Trabalhista</td><td>RH</td><td>Dra. Ana Souza</td><td>18/06/2024</td><td><span class="badge b-pend">Em elaboração</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: COMPLIANCE JURÍDICO ══ -->
+    <div id="pane-juridico-compliance" class="pane">
+      <div class="ph">
+        <div><h1>Compliance Jurídico</h1><p>Monitoramento de conformidade legal e regulatória</p></div>
+        <div class="btns">
+          <button class="btn btn-o">📄 Relatório</button>
+          <button class="btn btn-p" onclick="alert('Checklist salvo')">✔ Atualizar Status</button>
+        </div>
+      </div>
+      <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kc gr"><div class="kl">Conformidade Geral</div><div class="kv">91%</div><div class="kf">Índice global de compliance</div></div>
+        <div class="kc bl"><div class="kl">Obrigações ativas</div><div class="kv">44</div><div class="kf">Itens monitorados</div></div>
+        <div class="kc yl"><div class="kl">Pendências</div><div class="kv">4</div><div class="kf">Requerem ação</div></div>
+        <div class="kc rd"><div class="kl">Não conformes</div><div class="kv">0</div><div class="kf">Nenhuma infração ativa</div></div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div><div class="card-title">Painel de Conformidade por Área</div><div class="card-sub">Atualizado em 18/06/2024</div></div></div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Área</th><th>Obrigação</th><th>Periodicidade</th><th>Responsável</th><th>Último Cumprimento</th><th>Próximo Venc.</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>Trabalhista</b></td><td>Entrega eSocial mensal</td><td>Mensal</td><td>DP / Jurídico</td><td>31/05/2024</td><td>31/07/2024</td><td><span class="badge b-ok">Conforme</span></td></tr>
+            <tr><td><b>Tributário</b></td><td>EFD-Contribuições</td><td>Mensal</td><td>Fiscal</td><td>20/05/2024</td><td>20/07/2024</td><td><span class="badge b-ok">Conforme</span></td></tr>
+            <tr><td><b>Societário</b></td><td>Ata de Assembleia Anual</td><td>Anual</td><td>Jurídico</td><td>30/04/2024</td><td>30/04/2025</td><td><span class="badge b-ok">Conforme</span></td></tr>
+            <tr><td><b>LGPD</b></td><td>Revisão de política de privacidade</td><td>Semestral</td><td>DPO / Jurídico</td><td>01/01/2024</td><td>01/07/2024</td><td><span class="badge b-pend">Pendente</span></td></tr>
+            <tr><td><b>Contratual</b></td><td>Renovação contrato locação</td><td>Anual</td><td>Dr. Carlos Lima</td><td>01/03/2022</td><td>28/02/2025</td><td><span class="badge b-pend">Atenção</span></td></tr>
+            <tr><td><b>Ambiental</b></td><td>Licença de operação (CETESB)</td><td>Bienal</td><td>Jurídico</td><td>10/03/2023</td><td>10/03/2025</td><td><span class="badge b-ok">Conforme</span></td></tr>
+            <tr><td><b>Tributário</b></td><td>SPED Contábil (ECD)</td><td>Anual</td><td>Contabilidade</td><td>30/06/2024</td><td>30/06/2025</td><td><span class="badge b-ok">Conforme</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+
+    <!-- ══ PANE: CENTRAL DE AGENTES ══ -->
+    <div id="pane-ia-central" class="pane">
+      <div class="ph">
+        <div><h1>Central de Agentes de IA</h1><p>Agentes especializados por área do ERP — prontos para ajudar</p></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px">
+        <div class="card" style="cursor:pointer;transition:box-shadow .15s" onmouseover="this.style.boxShadow='0 4px 18px rgba(42,127,232,.18)'" onmouseout="this.style.boxShadow=''" onclick="nav('ia-fiscal',document.querySelector('[onclick*=ia-fiscal]'))">
+          <div style="padding:22px 20px;display:flex;flex-direction:column;gap:10px">
+            <div style="width:44px;height:44px;background:rgba(42,127,232,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">📄</div>
+            <div style="font-weight:700;font-size:14px">Agente Fiscal</div>
+            <div style="font-size:12px;color:var(--g4)">NF-e, SPED, apuração de impostos, obrigações acessórias e planejamento tributário.</div>
+            <div style="margin-top:4px"><span class="badge b-ok">● Online</span></div>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .15s" onmouseover="this.style.boxShadow='0 4px 18px rgba(42,127,232,.18)'" onmouseout="this.style.boxShadow=''" onclick="nav('ia-financeiro',document.querySelector('[onclick*=ia-financeiro]'))">
+          <div style="padding:22px 20px;display:flex;flex-direction:column;gap:10px">
+            <div style="width:44px;height:44px;background:rgba(34,197,94,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">💰</div>
+            <div style="font-weight:700;font-size:14px">Agente Financeiro</div>
+            <div style="font-size:12px;color:var(--g4)">Fluxo de caixa, contas a pagar/receber, conciliação bancária e previsões.</div>
+            <div style="margin-top:4px"><span class="badge b-ok">● Online</span></div>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .15s" onmouseover="this.style.boxShadow='0 4px 18px rgba(42,127,232,.18)'" onmouseout="this.style.boxShadow=''" onclick="nav('ia-rh',document.querySelector('[onclick*=ia-rh]'))">
+          <div style="padding:22px 20px;display:flex;flex-direction:column;gap:10px">
+            <div style="width:44px;height:44px;background:rgba(251,146,60,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">👥</div>
+            <div style="font-weight:700;font-size:14px">Agente RH</div>
+            <div style="font-size:12px;color:var(--g4)">Folha de pagamento, admissões, férias, eSocial e gestão de pessoas.</div>
+            <div style="margin-top:4px"><span class="badge b-ok">● Online</span></div>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .15s" onmouseover="this.style.boxShadow='0 4px 18px rgba(42,127,232,.18)'" onmouseout="this.style.boxShadow=''" onclick="nav('ia-juridico',document.querySelector('[onclick*=ia-juridico]'))">
+          <div style="padding:22px 20px;display:flex;flex-direction:column;gap:10px">
+            <div style="width:44px;height:44px;background:rgba(139,92,246,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">⚖️</div>
+            <div style="font-weight:700;font-size:14px">Agente Jurídico</div>
+            <div style="font-size:12px;color:var(--g4)">Processos judiciais, contratos, prazos, pareceres e compliance jurídico.</div>
+            <div style="margin-top:4px"><span class="badge b-ok">● Online</span></div>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:box-shadow .15s" onmouseover="this.style.boxShadow='0 4px 18px rgba(42,127,232,.18)'" onmouseout="this.style.boxShadow=''" onclick="nav('ia-contabil',document.querySelector('[onclick*=ia-contabil]'))">
+          <div style="padding:22px 20px;display:flex;flex-direction:column;gap:10px">
+            <div style="width:44px;height:44px;background:rgba(20,184,166,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">📊</div>
+            <div style="font-weight:700;font-size:14px">Agente Contábil</div>
+            <div style="font-size:12px;color:var(--g4)">Lançamentos, balanço, DRE, plano de contas e obrigações contábeis.</div>
+            <div style="margin-top:4px"><span class="badge b-ok">● Online</span></div>
+          </div>
+        </div>
+        <div class="card" style="padding:22px 20px;display:flex;flex-direction:column;gap:10px;opacity:.5">
+          <div style="width:44px;height:44px;background:var(--g2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px">🤖</div>
+          <div style="font-weight:700;font-size:14px">Em breve...</div>
+          <div style="font-size:12px;color:var(--g4)">Novos agentes especializados em Estoque, Compras, Logística e mais.</div>
+          <div style="margin-top:4px"><span class="badge b-gray">● Em desenvolvimento</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: AGENTE FISCAL ══ -->
+    <div id="pane-ia-fiscal" class="pane">
+      <div class="ph">
+        <div>
+          <h1>🤖 Agente Fiscal</h1>
+          <p>Especialista em NF-e, SPED, impostos, obrigações acessórias e planejamento tributário</p>
+        </div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="clearChat('fiscal')">🗑 Limpar</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;height:calc(100vh - 200px)">
+        <div class="card" style="display:flex;flex-direction:column;height:100%;padding:0;overflow:hidden">
+          <div id="chat-fiscal" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px">
+            <div class="msg-ai"><div class="msg-bubble msg-bubble-ai">Olá! Sou o <b>Agente Fiscal</b> do ERP. Posso ajudar com NF-e, NFS-e, CT-e, SPED Fiscal, apuração de ICMS, PIS/COFINS, ISS, obrigações acessórias, planejamento tributário e muito mais. Como posso ajudar?</div></div>
+          </div>
+          <div style="padding:14px;border-top:1px solid var(--g2);display:flex;gap:8px">
+            <input id="input-fiscal" class="search" style="flex:1;border:1px solid var(--g2);padding:9px 14px;font-size:13px" placeholder="Ex: Como apurar ICMS ST? Qual prazo para entrega da EFD?" onkeydown="if(event.key==='Enter')sendMsg('fiscal')">
+            <button class="btn btn-p" onclick="sendMsg('fiscal')">Enviar ➤</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">SUGESTÕES RÁPIDAS</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('fiscal','Quais são os prazos de entrega do SPED Fiscal?')">📅 Prazos SPED Fiscal</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('fiscal','Como funciona a substituição tributária do ICMS?')">🔄 ICMS-ST explicado</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('fiscal','Quais documentos fiscais preciso emitir para venda de produto com serviço?')">📄 NF-e + NFS-e juntas</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('fiscal','Como recuperar créditos de PIS e COFINS?')">💰 Recuperação PIS/COFINS</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('fiscal','O que é regime de caixa x competência para ISS?')">❓ Caixa vs Competência ISS</button>
+            </div>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">ESPECIALIDADES</div>
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--g4)">
+              <div>✅ NF-e / NFS-e / CT-e / MDF-e</div>
+              <div>✅ SPED Fiscal / EFD / ECF</div>
+              <div>✅ ICMS / IPI / ISS / PIS / COFINS</div>
+              <div>✅ Simples Nacional / Lucro Real / Presumido</div>
+              <div>✅ Planejamento tributário</div>
+              <div>✅ Recuperação de créditos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: AGENTE FINANCEIRO ══ -->
+    <div id="pane-ia-financeiro" class="pane">
+      <div class="ph">
+        <div>
+          <h1>🤖 Agente Financeiro</h1>
+          <p>Especialista em fluxo de caixa, contas, conciliação bancária e análise financeira</p>
+        </div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="clearChat('financeiro')">🗑 Limpar</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;height:calc(100vh - 200px)">
+        <div class="card" style="display:flex;flex-direction:column;height:100%;padding:0;overflow:hidden">
+          <div id="chat-financeiro" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px">
+            <div class="msg-ai"><div class="msg-bubble msg-bubble-ai">Olá! Sou o <b>Agente Financeiro</b>. Posso ajudar com fluxo de caixa, contas a pagar/receber, conciliação bancária, análise de liquidez, cobranças, previsões financeiras e gestão de tesouraria. Como posso ajudar?</div></div>
+          </div>
+          <div style="padding:14px;border-top:1px solid var(--g2);display:flex;gap:8px">
+            <input id="input-financeiro" class="search" style="flex:1;border:1px solid var(--g2);padding:9px 14px;font-size:13px" placeholder="Ex: Como melhorar o fluxo de caixa? Como calcular DRE?" onkeydown="if(event.key==='Enter')sendMsg('financeiro')">
+            <button class="btn btn-p" onclick="sendMsg('financeiro')">Enviar ➤</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">SUGESTÕES RÁPIDAS</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('financeiro','Como melhorar o fluxo de caixa da empresa?')">💧 Melhorar fluxo de caixa</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('financeiro','Como fazer conciliação bancária corretamente?')">🏦 Conciliação bancária</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('financeiro','Quais indicadores financeiros devo acompanhar mensalmente?')">📈 Indicadores essenciais</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('financeiro','Como calcular o capital de giro necessário para minha empresa?')">⚙️ Capital de giro</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('financeiro','Como estruturar uma política de cobrança eficiente?')">📬 Política de cobrança</button>
+            </div>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">ESPECIALIDADES</div>
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--g4)">
+              <div>✅ Fluxo de caixa e projeções</div>
+              <div>✅ Contas a pagar / receber</div>
+              <div>✅ Conciliação bancária</div>
+              <div>✅ Indicadores financeiros (KPIs)</div>
+              <div>✅ Gestão de tesouraria</div>
+              <div>✅ Análise de crédito e cobrança</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: AGENTE RH ══ -->
+    <div id="pane-ia-rh" class="pane">
+      <div class="ph">
+        <div>
+          <h1>🤖 Agente RH</h1>
+          <p>Especialista em folha de pagamento, eSocial, admissões, férias e gestão de pessoas</p>
+        </div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="clearChat('rh')">🗑 Limpar</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;height:calc(100vh - 200px)">
+        <div class="card" style="display:flex;flex-direction:column;height:100%;padding:0;overflow:hidden">
+          <div id="chat-rh" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px">
+            <div class="msg-ai"><div class="msg-bubble msg-bubble-ai">Olá! Sou o <b>Agente RH</b>. Posso ajudar com folha de pagamento, admissões, demissões, férias, 13º salário, eSocial, FGTS, INSS, benefícios e gestão de pessoas. Como posso ajudar?</div></div>
+          </div>
+          <div style="padding:14px;border-top:1px solid var(--g2);display:flex;gap:8px">
+            <input id="input-rh" class="search" style="flex:1;border:1px solid var(--g2);padding:9px 14px;font-size:13px" placeholder="Ex: Como calcular rescisão sem justa causa? Prazos do eSocial?" onkeydown="if(event.key==='Enter')sendMsg('rh')">
+            <button class="btn btn-p" onclick="sendMsg('rh')">Enviar ➤</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">SUGESTÕES RÁPIDAS</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('rh','Como calcular rescisão sem justa causa corretamente?')">📋 Rescisão sem justa causa</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('rh','Quais eventos preciso enviar no eSocial mensalmente?')">📡 Eventos eSocial</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('rh','Como calcular férias proporcionais e 1/3 constitucional?')">🏖 Cálculo de férias</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('rh','Quais são as tabelas de INSS e IRRF vigentes?')">📊 Tabelas INSS / IRRF</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('rh','Como estruturar um processo de onboarding eficiente?')">🚀 Onboarding eficiente</button>
+            </div>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">ESPECIALIDADES</div>
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--g4)">
+              <div>✅ Folha de pagamento e encargos</div>
+              <div>✅ eSocial e obrigações trabalhistas</div>
+              <div>✅ Admissão, demissão, férias</div>
+              <div>✅ FGTS, INSS, IRRF</div>
+              <div>✅ Benefícios e RH estratégico</div>
+              <div>✅ CLT e legislação trabalhista</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: AGENTE JURÍDICO ══ -->
+    <div id="pane-ia-juridico" class="pane">
+      <div class="ph">
+        <div>
+          <h1>🤖 Agente Jurídico</h1>
+          <p>Especialista em contratos, processos, prazos, compliance e orientação jurídica empresarial</p>
+        </div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="clearChat('juridico-ia')">🗑 Limpar</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;height:calc(100vh - 200px)">
+        <div class="card" style="display:flex;flex-direction:column;height:100%;padding:0;overflow:hidden">
+          <div id="chat-juridico-ia" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px">
+            <div class="msg-ai"><div class="msg-bubble msg-bubble-ai">Olá! Sou o <b>Agente Jurídico</b>. Posso orientar sobre contratos empresariais, processos judiciais, controle de prazos, compliance jurídico, LGPD, societário e questões legais do negócio. <i>Lembre-se: orientações gerais não substituem assessoria jurídica especializada.</i> Como posso ajudar?</div></div>
+          </div>
+          <div style="padding:14px;border-top:1px solid var(--g2);display:flex;gap:8px">
+            <input id="input-juridico-ia" class="search" style="flex:1;border:1px solid var(--g2);padding:9px 14px;font-size:13px" placeholder="Ex: O que deve ter em um contrato de prestação de serviço?" onkeydown="if(event.key==='Enter')sendMsg('juridico-ia')">
+            <button class="btn btn-p" onclick="sendMsg('juridico-ia')">Enviar ➤</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">SUGESTÕES RÁPIDAS</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('juridico-ia','O que deve conter em um contrato de prestação de serviços?')">📝 Contrato de serviços</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('juridico-ia','Quais são as obrigações de compliance da LGPD para empresas?')">🔒 LGPD compliance</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('juridico-ia','Como funciona a responsabilidade dos sócios em uma Ltda?')">🏢 Responsabilidade societária</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('juridico-ia','Quais são os prazos prescricionais mais importantes no direito empresarial?')">⏱ Prazos prescricionais</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('juridico-ia','Como classificar um risco judicial como alto, médio ou baixo?')">⚖️ Classificação de risco</button>
+            </div>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">ESPECIALIDADES</div>
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--g4)">
+              <div>✅ Contratos empresariais</div>
+              <div>✅ Processos e prazos judiciais</div>
+              <div>✅ LGPD e proteção de dados</div>
+              <div>✅ Direito societário</div>
+              <div>✅ Compliance jurídico</div>
+              <div>✅ Orientação trabalhista</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PANE: AGENTE CONTÁBIL ══ -->
+    <div id="pane-ia-contabil" class="pane">
+      <div class="ph">
+        <div>
+          <h1>🤖 Agente Contábil</h1>
+          <p>Especialista em lançamentos, balanço, DRE, plano de contas e obrigações contábeis</p>
+        </div>
+        <div class="btns">
+          <button class="btn btn-o" onclick="clearChat('contabil')">🗑 Limpar</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:16px;height:calc(100vh - 200px)">
+        <div class="card" style="display:flex;flex-direction:column;height:100%;padding:0;overflow:hidden">
+          <div id="chat-contabil" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px">
+            <div class="msg-ai"><div class="msg-bubble msg-bubble-ai">Olá! Sou o <b>Agente Contábil</b>. Posso ajudar com lançamentos contábeis, plano de contas, DRE, balanço patrimonial, depreciação, ECD/ECF, conciliações e interpretação de demonstrações financeiras. Como posso ajudar?</div></div>
+          </div>
+          <div style="padding:14px;border-top:1px solid var(--g2);display:flex;gap:8px">
+            <input id="input-contabil" class="search" style="flex:1;border:1px solid var(--g2);padding:9px 14px;font-size:13px" placeholder="Ex: Como lançar uma provisão de férias? Como calcular depreciação?" onkeydown="if(event.key==='Enter')sendMsg('contabil')">
+            <button class="btn btn-p" onclick="sendMsg('contabil')">Enviar ➤</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">SUGESTÕES RÁPIDAS</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('contabil','Como fazer o lançamento contábil de uma provisão de férias?')">📒 Provisão de férias</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('contabil','Como calcular depreciação pelo método linear e saldo decrescente?')">📉 Depreciação de ativos</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('contabil','Como interpretar um DRE? O que cada linha significa?')">📊 Interpretar DRE</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('contabil','Qual a diferença entre regime de caixa e regime de competência?')">⚖️ Caixa vs Competência</button>
+              <button class="btn btn-o" style="justify-content:flex-start;font-size:11px;text-align:left" onclick="quickMsg('contabil','Como estruturar um plano de contas para uma empresa de serviços?')">🗂 Plano de contas</button>
+            </div>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="font-weight:700;font-size:12px;margin-bottom:10px;color:var(--g4)">ESPECIALIDADES</div>
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--g4)">
+              <div>✅ Lançamentos e partidas dobradas</div>
+              <div>✅ Plano de contas e centros de custo</div>
+              <div>✅ DRE, Balanço e Fluxo de Caixa</div>
+              <div>✅ Depreciação e provisões</div>
+              <div>✅ ECD / ECF / SPED Contábil</div>
+              <div>✅ Normas contábeis (CPC / IFRS)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /app -->
+<!-- ══ MODAL: ADMISSÃO ══ -->
+<div class="overlay" id="modal-admissao">
+  <div class="modal">
+    <div class="modal-hdr"><h2>Novo Colaborador</h2><button class="close-btn" onclick="fecharModal('modal-admissao')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg full"><label>Nome Completo</label><input type="text" id="f-nome" placeholder="Ex: João da Silva"></div>
+        <div class="fg"><label>CPF</label><input type="text" id="f-cpf" placeholder="000.000.000-00" oninput="mascaraCPF(this)"></div>
+        <div class="fg"><label>Data de Nascimento</label><input type="date" id="f-nasc"></div>
+        <div class="fg"><label>Cargo</label><input type="text" id="f-cargo" placeholder="Ex: Analista Fiscal"></div>
+        <div class="fg"><label>Departamento</label>
+          <select id="f-dept"><option>Contabilidade</option><option>Fiscal</option><option>Financeiro</option><option>RH</option><option>TI</option><option>Comercial</option><option>Operações</option><option>Diretoria</option></select>
+        </div>
+        <div class="fg"><label>Salário Base (R$)</label><input type="number" id="f-salario" placeholder="0,00" min="1412"></div>
+        <div class="fg"><label>Data de Admissão</label><input type="date" id="f-admissao"></div>
+        <div class="fg"><label>PIS / PASEP</label><input type="text" id="f-pis" placeholder="000.00000.00-0"></div>
+        <div class="fg"><label>Escolaridade</label>
+          <select id="f-esc"><option>Ensino Médio</option><option>Superior Incompleto</option><option>Superior Completo</option><option>Pós-graduação</option><option>Mestrado</option></select>
+        </div>
+        <div class="fg"><label>Tipo Contrato</label>
+          <select id="f-contrato"><option>CLT</option><option>Estágio</option><option>Aprendiz</option><option>PJ</option></select>
+        </div>
+      </div>
+      <!-- Preview cálculo -->
+      <div class="calc-box" id="calc-preview">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g4);margin-bottom:8px">Simulação de custo mensal</div>
+        <div class="calc-row"><span>Salário Bruto</span><span class="calc-plus" id="cp-bruto">R$ 0,00</span></div>
+        <div class="calc-row"><span>INSS (empregador 20%)</span><span class="calc-minus" id="cp-inss-emp">R$ 0,00</span></div>
+        <div class="calc-row"><span>FGTS (8%)</span><span class="calc-minus" id="cp-fgts">R$ 0,00</span></div>
+        <div class="calc-row"><span>Custo Total para Empresa</span><span class="calc-plus" id="cp-total">R$ 0,00</span></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="fecharModal('modal-admissao')">Cancelar</button>
+      <button class="btn btn-g" onclick="admitirColaborador()">✓ Registrar Admissão</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: DEMISSÃO ══ -->
+<div class="overlay" id="modal-demissao">
+  <div class="modal">
+    <div class="modal-hdr"><h2>Registrar Demissão</h2><button class="close-btn" onclick="fecharModal('modal-demissao')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg full"><label>Colaborador</label><select id="dem-emp"><option value="">— Selecione —</option></select></div>
+        <div class="fg"><label>Data de Demissão</label><input type="date" id="dem-data"></div>
+        <div class="fg"><label>Tipo de Demissão</label>
+          <select id="dem-tipo" onchange="calcRescisao()">
+            <option value="sem-justa">Sem Justa Causa</option>
+            <option value="justa">Justa Causa</option>
+            <option value="pedido">Pedido de Demissão</option>
+            <option value="acordo">Acordo (§6°)</option>
+          </select>
+        </div>
+        <div class="fg"><label>Aviso Prévio</label>
+          <select id="dem-aviso" onchange="calcRescisao()">
+            <option value="trabalhado">Trabalhado</option>
+            <option value="indenizado">Indenizado</option>
+            <option value="dispensa">Dispensado</option>
+          </select>
+        </div>
+        <div class="fg full"><label>Motivo / Observações</label><textarea id="dem-obs" rows="2" placeholder="Descreva o motivo..."></textarea></div>
+      </div>
+      <div class="calc-box" id="calc-rescisao">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g4);margin-bottom:8px">Verbas rescisórias estimadas</div>
+        <div class="calc-row"><span>Saldo de Salário (dias trabalhados)</span><span class="calc-plus" id="r-saldo">—</span></div>
+        <div class="calc-row"><span>Aviso Prévio Indenizado</span><span class="calc-plus" id="r-aviso">—</span></div>
+        <div class="calc-row"><span>13° Proporcional</span><span class="calc-plus" id="r-13">—</span></div>
+        <div class="calc-row"><span>Férias Proporcionais + 1/3</span><span class="calc-plus" id="r-fer">—</span></div>
+        <div class="calc-row"><span>Multa FGTS</span><span class="calc-plus" id="r-multa">—</span></div>
+        <div class="calc-row"><span>INSS (desconto)</span><span class="calc-minus" id="r-inss">—</span></div>
+        <div class="calc-row"><span>IRRF (desconto)</span><span class="calc-minus" id="r-irrf">—</span></div>
+        <div class="calc-row"><span><b>Total Líquido Rescisório</b></span><span class="calc-plus" id="r-total" style="font-weight:800">—</span></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="fecharModal('modal-demissao')">Cancelar</button>
+      <button class="btn btn-r" onclick="demitirColaborador()">Confirmar Demissão</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: FÉRIAS ══ -->
+<div class="overlay" id="modal-ferias">
+  <div class="modal">
+    <div class="modal-hdr"><h2>Agendar Férias</h2><button class="close-btn" onclick="fecharModal('modal-ferias')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg full"><label>Colaborador</label><select id="fer-emp"><option value="">— Selecione —</option></select></div>
+        <div class="fg"><label>Início das Férias</label><input type="date" id="fer-inicio"></div>
+        <div class="fg"><label>Dias de Gozo</label><input type="number" id="fer-dias" value="30" min="5" max="30" onchange="calcFerias()"></div>
+        <div class="fg"><label>Abono Pecuniário (dias)</label><input type="number" id="fer-abono" value="0" min="0" max="10" onchange="calcFerias()"></div>
+        <div class="fg"><label>Adiantamento 13°?</label><select id="fer-13"><option value="nao">Não</option><option value="sim">Sim</option></select></div>
+      </div>
+      <div class="calc-box" id="calc-ferias-box">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g4);margin-bottom:8px">Projeção de pagamento</div>
+        <div class="calc-row"><span>Férias brutas</span><span class="calc-plus" id="cf-bruto">—</span></div>
+        <div class="calc-row"><span>1/3 Constitucional</span><span class="calc-plus" id="cf-tercio">—</span></div>
+        <div class="calc-row"><span>Abono pecuniário</span><span class="calc-plus" id="cf-abono">—</span></div>
+        <div class="calc-row"><span>INSS desc.</span><span class="calc-minus" id="cf-inss">—</span></div>
+        <div class="calc-row"><span><b>Líquido a pagar</b></span><span class="calc-plus" id="cf-liq" style="font-weight:800">—</span></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="fecharModal('modal-ferias')">Cancelar</button>
+      <button class="btn btn-g" onclick="agendarFerias()">✓ Agendar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+<!-- MODAL: LANÇAMENTO -->
+<div class="overlay" id="modal-lanc">
+  <div class="modal">
+    <div class="modal-hdr"><h2>Novo Lançamento Contábil</h2><button class="close-btn" onclick="fecharModal('modal-lanc')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg"><label>Data</label><input type="date" id="l-data"></div>
+        <div class="fg"><label>Tipo</label>
+          <select id="l-tipo">
+            <option value="receita">Receita</option>
+            <option value="despesa">Despesa</option>
+            <option value="transferencia">Transferência</option>
+            <option value="ajuste">Ajuste</option>
+          </select>
+        </div>
+        <div class="fg full"><label>Histórico / Descrição</label><input type="text" id="l-hist" placeholder="Ex: Venda de mercadorias NF 48.392"></div>
+        <div class="fg"><label>Conta Débito</label>
+          <select id="l-deb"></select>
+        </div>
+        <div class="fg"><label>Conta Crédito</label>
+          <select id="l-cred"></select>
+        </div>
+        <div class="fg"><label>Valor (R$)</label><input type="number" id="l-valor" min="0.01" step="0.01" placeholder="0,00" oninput="previewLanc()"></div>
+        <div class="fg"><label>Centro de Custo</label>
+          <select id="l-cc">
+            <option>Geral</option><option>Comercial</option><option>Financeiro</option>
+            <option>Operações</option><option>TI</option><option>RH</option>
+          </select>
+        </div>
+      </div>
+      <div class="lanc-preview" id="preview-lanc" style="display:none">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g4);margin-bottom:8px">Partida dobrada</div>
+        <div class="lanc-row"><span id="prev-deb-nome">—</span><span class="val-d" id="prev-deb-val">D</span></div>
+        <div class="lanc-row"><span id="prev-cred-nome">—</span><span class="val-c" id="prev-cred-val">C</span></div>
+        <div class="lanc-row" style="margin-top:4px"><span style="color:var(--g4)">Equilíbrio</span><span style="font-weight:700;color:var(--green)" id="prev-eq">✓ Balanceado</span></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="fecharModal('modal-lanc')">Cancelar</button>
+      <button class="btn btn-p" onclick="salvarLancamento()">✓ Registrar Lançamento</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: CONTA -->
+<div class="overlay" id="modal-conta">
+  <div class="modal">
+    <div class="modal-hdr"><h2>Nova Conta Contábil</h2><button class="close-btn" onclick="fecharModal('modal-conta')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="fg"><label>Código</label><input type="text" id="c-cod" placeholder="Ex: 1.1.3.05"></div>
+        <div class="fg"><label>Tipo</label>
+          <select id="c-tipo">
+            <option value="A">Ativo</option><option value="P">Passivo</option>
+            <option value="PL">Patrimônio Líquido</option><option value="R">Receita</option>
+            <option value="D">Despesa</option>
+          </select>
+        </div>
+        <div class="fg full"><label>Nome da Conta</label><input type="text" id="c-nome" placeholder="Ex: Estoques de Produtos Acabados"></div>
+        <div class="fg"><label>Natureza</label>
+          <select id="c-nat"><option value="D">Devedora</option><option value="C">Credora</option></select>
+        </div>
+        <div class="fg"><label>Nível</label>
+          <select id="c-nivel"><option value="1">1 — Grupo</option><option value="2">2 — Subgrupo</option><option value="3" selected>3 — Analítica</option></select>
+        </div>
+        <div class="fg full"><label>Conta Pai (opcional)</label>
+          <select id="c-pai"><option value="">— Nenhuma —</option></select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-o" onclick="fecharModal('modal-conta')">Cancelar</button>
+      <button class="btn btn-p" onclick="salvarConta()">✓ Cadastrar Conta</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════
+//  DADOS RH
+// ═══════════════════════════
+const colaboradores = [
+  {mat:'RH-0001',nome:'Ana Paula Souza',cargo:'Gerente Contábil',dept:'Contabilidade',admissao:'2019-03-15',salario:12800,status:'Ativo',pis:'120.38291.00-4',cpf:'321.456.789-00',nasc:'1985-07-22'},
+  {mat:'RH-0002',nome:'Roberto Lima',cargo:'Analista Fiscal Sr.',dept:'Fiscal',admissao:'2021-01-10',salario:7400,status:'Ativo',pis:'130.44120.00-1',cpf:'432.567.890-11',nasc:'1990-03-14'},
+  {mat:'RH-0003',nome:'Carla Fernandes',cargo:'Coord. Financeiro',dept:'Financeiro',admissao:'2020-06-02',salario:9200,status:'Ativo',pis:'140.55200.00-8',cpf:'543.678.901-22',nasc:'1988-11-30'},
+  {mat:'RH-0004',nome:'Marcos Vieira',cargo:'Dev Backend Sênior',dept:'TI',admissao:'2022-09-05',salario:11000,status:'Férias',pis:'150.62130.00-3',cpf:'654.789.012-33',nasc:'1992-05-18'},
+  {mat:'RH-0005',nome:'Juliana Costa',cargo:'Analista RH',dept:'RH',admissao:'2023-02-20',salario:6800,status:'Ativo',pis:'160.73040.00-7',cpf:'765.890.123-44',nasc:'1995-09-07'},
+  {mat:'RH-0006',nome:'Felipe Santos',cargo:'Gerente Comercial',dept:'Comercial',admissao:'2018-11-01',salario:14500,status:'Ativo',pis:'170.84100.00-2',cpf:'876.901.234-55',nasc:'1983-02-25'},
+  {mat:'RH-0007',nome:'Tatiana Alves',cargo:'Analista Contábil',dept:'Contabilidade',admissao:'2022-04-11',salario:5800,status:'Ativo',pis:'180.95110.00-6',cpf:'987.012.345-66',nasc:'1993-12-03'},
+  {mat:'RH-0008',nome:'Eduardo Nunes',cargo:'CFO',dept:'Diretoria',admissao:'2016-08-22',salario:28000,status:'Ativo',pis:'190.06210.00-0',cpf:'098.123.456-77',nasc:'1978-06-15'},
+  {mat:'RH-0009',nome:'Priscila Rocha',cargo:'Analista Financeiro',dept:'Financeiro',admissao:'2021-07-14',salario:6200,status:'Ativo',pis:'200.17320.00-5',cpf:'109.234.567-88',nasc:'1991-04-20'},
+  {mat:'RH-0010',nome:'Gabriel Torres',cargo:'Supervisor Operações',dept:'Operações',admissao:'2020-02-03',salario:8100,status:'Ativo',pis:'210.28430.00-9',cpf:'210.345.678-99',nasc:'1987-08-11'},
+  {mat:'RH-0011',nome:'Aline Martins',cargo:'Assistente Fiscal',dept:'Fiscal',admissao:'2023-05-08',salario:3400,status:'Ativo',pis:'220.39540.00-3',cpf:'321.456.789-10',nasc:'1998-01-29'},
+  {mat:'RH-0012',nome:'Bruno Cardoso',cargo:'Dev Frontend',dept:'TI',admissao:'2021-11-22',salario:9800,status:'Ativo',pis:'230.40650.00-8',cpf:'432.567.890-21',nasc:'1994-07-06'},
+  {mat:'RH-0013',nome:'Renata Gomes',cargo:'Coord. Comercial',dept:'Comercial',admissao:'2019-09-30',salario:7600,status:'Férias',pis:'240.51760.00-2',cpf:'543.678.901-32',nasc:'1989-03-17'},
+  {mat:'RH-0014',nome:'Diego Matos',cargo:'Assistente Comercial',dept:'Comercial',admissao:'2025-04-03',salario:3200,status:'Ativo',pis:'250.62870.00-7',cpf:'654.789.012-43',nasc:'2000-10-14'},
+  {mat:'RH-0015',nome:'Lucas Pereira',cargo:'Analista Fiscal',dept:'Fiscal',admissao:'2025-06-02',salario:6800,status:'Ativo',pis:'260.73980.00-1',cpf:'765.890.123-54',nasc:'1997-05-28'},
+];
+// ═══════════════════════════════════════════
+//  PLANO DE CONTAS
+// ═══════════════════════════════════════════
+const planoContas = [
+  // ATIVO
+  {cod:'1',nome:'ATIVO',tipo:'A',nat:'D',nivel:1,pai:null},
+  {cod:'1.1',nome:'Ativo Circulante',tipo:'A',nat:'D',nivel:2,pai:'1'},
+  {cod:'1.1.1',nome:'Disponibilidades',tipo:'A',nat:'D',nivel:2,pai:'1.1'},
+  {cod:'1.1.1.01',nome:'Caixa Geral',tipo:'A',nat:'D',nivel:3,pai:'1.1.1'},
+  {cod:'1.1.1.02',nome:'Banco Itaú c/c 12345-6',tipo:'A',nat:'D',nivel:3,pai:'1.1.1'},
+  {cod:'1.1.1.03',nome:'Banco Bradesco c/c 98765-4',tipo:'A',nat:'D',nivel:3,pai:'1.1.1'},
+  {cod:'1.1.2',nome:'Créditos a Receber',tipo:'A',nat:'D',nivel:2,pai:'1.1'},
+  {cod:'1.1.2.01',nome:'Clientes — Duplicatas a Receber',tipo:'A',nat:'D',nivel:3,pai:'1.1.2'},
+  {cod:'1.1.2.02',nome:'(-) Provisão Devedores Duvidosos',tipo:'A',nat:'C',nivel:3,pai:'1.1.2'},
+  {cod:'1.1.2.03',nome:'Adiantamentos a Funcionários',tipo:'A',nat:'D',nivel:3,pai:'1.1.2'},
+  {cod:'1.1.3',nome:'Estoques',tipo:'A',nat:'D',nivel:2,pai:'1.1'},
+  {cod:'1.1.3.01',nome:'Estoque de Matéria-Prima',tipo:'A',nat:'D',nivel:3,pai:'1.1.3'},
+  {cod:'1.1.3.02',nome:'Estoque de Produtos em Elaboração',tipo:'A',nat:'D',nivel:3,pai:'1.1.3'},
+  {cod:'1.1.3.03',nome:'Estoque de Produtos Acabados',tipo:'A',nat:'D',nivel:3,pai:'1.1.3'},
+  {cod:'1.2',nome:'Ativo Não Circulante',tipo:'A',nat:'D',nivel:2,pai:'1'},
+  {cod:'1.2.1',nome:'Imobilizado',tipo:'A',nat:'D',nivel:2,pai:'1.2'},
+  {cod:'1.2.1.01',nome:'Máquinas e Equipamentos',tipo:'A',nat:'D',nivel:3,pai:'1.2.1'},
+  {cod:'1.2.1.02',nome:'Móveis e Utensílios',tipo:'A',nat:'D',nivel:3,pai:'1.2.1'},
+  {cod:'1.2.1.03',nome:'Veículos',tipo:'A',nat:'D',nivel:3,pai:'1.2.1'},
+  {cod:'1.2.1.04',nome:'(-) Depreciação Acumulada',tipo:'A',nat:'C',nivel:3,pai:'1.2.1'},
+  // PASSIVO
+  {cod:'2',nome:'PASSIVO',tipo:'P',nat:'C',nivel:1,pai:null},
+  {cod:'2.1',nome:'Passivo Circulante',tipo:'P',nat:'C',nivel:2,pai:'2'},
+  {cod:'2.1.1',nome:'Fornecedores',tipo:'P',nat:'C',nivel:2,pai:'2.1'},
+  {cod:'2.1.1.01',nome:'Fornecedores Nacionais',tipo:'P',nat:'C',nivel:3,pai:'2.1.1'},
+  {cod:'2.1.2',nome:'Obrigações Trabalhistas',tipo:'P',nat:'C',nivel:2,pai:'2.1'},
+  {cod:'2.1.2.01',nome:'Salários a Pagar',tipo:'P',nat:'C',nivel:3,pai:'2.1.2'},
+  {cod:'2.1.2.02',nome:'FGTS a Recolher',tipo:'P',nat:'C',nivel:3,pai:'2.1.2'},
+  {cod:'2.1.2.03',nome:'INSS a Recolher',tipo:'P',nat:'C',nivel:3,pai:'2.1.2'},
+  {cod:'2.1.3',nome:'Obrigações Fiscais',tipo:'P',nat:'C',nivel:2,pai:'2.1'},
+  {cod:'2.1.3.01',nome:'ICMS a Recolher',tipo:'P',nat:'C',nivel:3,pai:'2.1.3'},
+  {cod:'2.1.3.02',nome:'PIS/COFINS a Recolher',tipo:'P',nat:'C',nivel:3,pai:'2.1.3'},
+  {cod:'2.1.3.03',nome:'IRPJ/CSLL a Recolher',tipo:'P',nat:'C',nivel:3,pai:'2.1.3'},
+  {cod:'2.2',nome:'Passivo Não Circulante',tipo:'P',nat:'C',nivel:2,pai:'2'},
+  {cod:'2.2.1.01',nome:'Empréstimos e Financiamentos LP',tipo:'P',nat:'C',nivel:3,pai:'2.2'},
+  // PL
+  {cod:'3',nome:'PATRIMÔNIO LÍQUIDO',tipo:'PL',nat:'C',nivel:1,pai:null},
+  {cod:'3.1.1.01',nome:'Capital Social Integralizado',tipo:'PL',nat:'C',nivel:3,pai:'3'},
+  {cod:'3.1.2.01',nome:'Reserva Legal',tipo:'PL',nat:'C',nivel:3,pai:'3'},
+  {cod:'3.1.3.01',nome:'Lucros Acumulados',tipo:'PL',nat:'C',nivel:3,pai:'3'},
+  // RECEITA
+  {cod:'4',nome:'RECEITAS',tipo:'R',nat:'C',nivel:1,pai:null},
+  {cod:'4.1',nome:'Receita Operacional Bruta',tipo:'R',nat:'C',nivel:2,pai:'4'},
+  {cod:'4.1.1.01',nome:'Receita de Venda de Produtos',tipo:'R',nat:'C',nivel:3,pai:'4.1'},
+  {cod:'4.1.1.02',nome:'Receita de Prestação de Serviços',tipo:'R',nat:'C',nivel:3,pai:'4.1'},
+  {cod:'4.2',nome:'Deduções da Receita',tipo:'R',nat:'D',nivel:2,pai:'4'},
+  {cod:'4.2.1.01',nome:'(-) Devoluções e Abatimentos',tipo:'R',nat:'D',nivel:3,pai:'4.2'},
+  {cod:'4.2.1.02',nome:'(-) Impostos sobre Vendas',tipo:'R',nat:'D',nivel:3,pai:'4.2'},
+  // DESPESA
+  {cod:'5',nome:'DESPESAS E CUSTOS',tipo:'D',nat:'D',nivel:1,pai:null},
+  {cod:'5.1',nome:'Custo dos Produtos Vendidos',tipo:'D',nat:'D',nivel:2,pai:'5'},
+  {cod:'5.1.1.01',nome:'CPV — Custo das Mercadorias',tipo:'D',nat:'D',nivel:3,pai:'5.1'},
+  {cod:'5.2',nome:'Despesas Operacionais',tipo:'D',nat:'D',nivel:2,pai:'5'},
+  {cod:'5.2.1.01',nome:'Despesas com Pessoal',tipo:'D',nat:'D',nivel:3,pai:'5.2'},
+  {cod:'5.2.1.02',nome:'Aluguéis e Locações',tipo:'D',nat:'D',nivel:3,pai:'5.2'},
+  {cod:'5.2.1.03',nome:'Energia Elétrica e Utilidades',tipo:'D',nat:'D',nivel:3,pai:'5.2'},
+  {cod:'5.2.1.04',nome:'Despesas com TI e Sistemas',tipo:'D',nat:'D',nivel:3,pai:'5.2'},
+  {cod:'5.3',nome:'Despesas Financeiras',tipo:'D',nat:'D',nivel:2,pai:'5'},
+  {cod:'5.3.1.01',nome:'Juros e Encargos Bancários',tipo:'D',nat:'D',nivel:3,pai:'5.3'},
+  {cod:'5.4',nome:'Provisões e Depreciação',tipo:'D',nat:'D',nivel:2,pai:'5'},
+  {cod:'5.4.1.01',nome:'Depreciação do Imobilizado',tipo:'D',nat:'D',nivel:3,pai:'5.4'},
+  {cod:'5.4.1.02',nome:'Provisão para Devedores Duvidosos',tipo:'D',nat:'D',nivel:3,pai:'5.4'},
+];
+
+// ═══════════════════════════════════════════
+//  LANÇAMENTOS
+// ═══════════════════════════════════════════
+let lancamentos = [
+  {id:1,data:'2025-06-01',hist:'Receita de vendas — NF 48.101',deb:'1.1.2.01',cred:'4.1.1.01',valor:45800,tipo:'receita',cc:'Comercial',user:'APS'},
+  {id:2,data:'2025-06-02',hist:'Custo mercadorias vendidas jun',deb:'5.1.1.01',cred:'1.1.3.03',valor:21200,tipo:'despesa',cc:'Operações',user:'APS'},
+  {id:3,data:'2025-06-03',hist:'Pagamento fornecedor Alpha Ltda',deb:'2.1.1.01',cred:'1.1.1.02',valor:18400,tipo:'transferencia',cc:'Financeiro',user:'CF'},
+  {id:4,data:'2025-06-04',hist:'Receita de serviços — NFS 22.040',deb:'1.1.2.01',cred:'4.1.1.02',valor:12600,tipo:'receita',cc:'Comercial',user:'APS'},
+  {id:5,data:'2025-06-05',hist:'Folha de pagamento mai/25',deb:'5.2.1.01',cred:'2.1.2.01',valor:314200,tipo:'despesa',cc:'RH',user:'JC'},
+  {id:6,data:'2025-06-05',hist:'FGTS mai/25',deb:'5.2.1.01',cred:'2.1.2.02',valor:25136,tipo:'despesa',cc:'RH',user:'JC'},
+  {id:7,data:'2025-06-06',hist:'Pagamento salários mai/25',deb:'2.1.2.01',cred:'1.1.1.02',valor:281480,tipo:'transferencia',cc:'RH',user:'CF'},
+  {id:8,data:'2025-06-09',hist:'Aluguel galpão jun/25',deb:'5.2.1.02',cred:'2.1.1.01',valor:18000,tipo:'despesa',cc:'Operações',user:'CF'},
+  {id:9,data:'2025-06-10',hist:'Receita de vendas — NF 48.205',deb:'1.1.2.01',cred:'4.1.1.01',valor:38500,tipo:'receita',cc:'Comercial',user:'APS'},
+  {id:10,data:'2025-06-10',hist:'Impostos sobre vendas jun',deb:'4.2.1.02',cred:'2.1.3.01',valor:8200,tipo:'despesa',cc:'Fiscal',user:'RL'},
+  {id:11,data:'2025-06-11',hist:'Energia elétrica mai/25',deb:'5.2.1.03',cred:'1.1.1.02',valor:8750,tipo:'despesa',cc:'Operações',user:'CF'},
+  {id:12,data:'2025-06-12',hist:'Depreciação imobilizado jun',deb:'5.4.1.01',cred:'1.2.1.04',valor:4200,tipo:'ajuste',cc:'Geral',user:'APS'},
+  {id:13,data:'2025-06-13',hist:'Recebimento duplicata cliente XYZ',deb:'1.1.1.02',cred:'1.1.2.01',valor:45800,tipo:'transferencia',cc:'Financeiro',user:'CF'},
+  {id:14,data:'2025-06-16',hist:'PIS/COFINS mai/25',deb:'4.2.1.02',cred:'2.1.3.02',valor:6420,tipo:'despesa',cc:'Fiscal',user:'RL'},
+  {id:15,data:'2025-06-17',hist:'Receita de serviços — NFS 22.104',deb:'1.1.2.01',cred:'4.1.1.02',valor:8750,tipo:'receita',cc:'Comercial',user:'APS'},
+  {id:16,data:'2025-06-17',hist:'Provisão devedores duvidosos',deb:'5.4.1.02',cred:'1.1.2.02',valor:2300,tipo:'ajuste',cc:'Geral',user:'APS'},
+];
+let nextId = 17;
+
+// ═══════════════════════════════════════════
+//  UTILITÁRIOS
+// ═══════════════════════════════════════════
+const fmt  = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const fmtD = d => new Date(d+'T00:00:00').toLocaleDateString('pt-BR');
+const contaAnalitica = () => planoContas.filter(c=>c.nivel===3);
+const getNome = cod => { const c=planoContas.find(x=>x.cod===cod); return c?`${c.cod} — ${c.nome}`:'—'; };
+
+
+
+// ═══════════════════════════════════════════
+//  LANÇAMENTOS
+// ═══════════════════════════════════════════
+function renderLancamentos(){
+  const busca = document.getElementById('busca-lanc').value.toLowerCase();
+  const tipo  = document.getElementById('fil-lanc-tipo').value;
+  const mes   = document.getElementById('fil-lanc-mes').value; // "2025-06"
+
+  const lista = lancamentos.filter(l=>{
+    const matchB = !busca || l.hist.toLowerCase().includes(busca)
+      || getNome(l.deb).toLowerCase().includes(busca)
+      || getNome(l.cred).toLowerCase().includes(busca);
+    const matchT = !tipo || l.tipo===tipo;
+    const matchM = !mes  || l.data.startsWith(mes);
+    return matchB&&matchT&&matchM;
+  });
+
+  const tbody = document.getElementById('tbody-lanc');
+  tbody.innerHTML = lista.map(l=>{
+    const tipoBadge = {receita:'b-ok',despesa:'b-err',transferencia:'b-proc',ajuste:'b-pend'}[l.tipo]||'b-gray';
+    const tipoLabel = {receita:'Receita',despesa:'Despesa',transferencia:'Transferência',ajuste:'Ajuste'}[l.tipo];
+    return `<tr>
+      <td class="mono">LÇ-${String(l.id).padStart(5,'0')}</td>
+      <td>${fmtD(l.data)}</td>
+      <td>${l.hist}</td>
+      <td class="mono" style="font-size:11px">${getNome(l.deb)}</td>
+      <td class="mono" style="font-size:11px">${getNome(l.cred)}</td>
+      <td style="font-weight:700">${fmt(l.valor)}</td>
+      <td><span class="badge ${tipoBadge}">${tipoLabel}</span></td>
+      <td style="color:var(--g4);font-size:11px">${l.user}</td>
+    </tr>`;
+  }).join('');
+
+  // KPIs — débitos e créditos são sempre iguais (partida dobrada)
+  const total = lista.reduce((s,l)=>s+l.valor,0);
+  document.getElementById('kpi-deb').textContent  = fmt(total);
+  document.getElementById('kpi-cred').textContent = fmt(total);
+  document.getElementById('kpi-nlanc').textContent = lista.length;
+  document.getElementById('kpi-eq').textContent   = '✓';
+  document.getElementById('qtd-lanc').textContent = lista.length;
+}
+
+function salvarLancamento(){
+  const data  = document.getElementById('l-data').value;
+  const hist  = document.getElementById('l-hist').value.trim();
+  const deb   = document.getElementById('l-deb').value;
+  const cred  = document.getElementById('l-cred').value;
+  const valor = parseFloat(document.getElementById('l-valor').value);
+  const tipo  = document.getElementById('l-tipo').value;
+  const cc    = document.getElementById('l-cc').value;
+
+  if(!data||!hist||!deb||!cred||!valor||valor<=0){
+    showToast('Preencha todos os campos','err'); return;
+  }
+  if(deb===cred){
+    showToast('Conta débito e crédito não podem ser iguais','err'); return;
+  }
+
+  lancamentos.unshift({id:nextId++,data,hist,deb,cred,valor,tipo,cc,user:'MA'});
+  fecharModal('modal-lanc');
+  renderLancamentos();
+  showToast(`Lançamento LÇ-${String(nextId-1).padStart(5,'0')} registrado`,'ok');
+  document.getElementById('l-hist').value='';
+  document.getElementById('l-valor').value='';
+  document.getElementById('preview-lanc').style.display='none';
+}
+
+function previewLanc(){
+  const deb   = document.getElementById('l-deb').value;
+  const cred  = document.getElementById('l-cred').value;
+  const valor = parseFloat(document.getElementById('l-valor').value)||0;
+  if(!deb||!cred||!valor) { document.getElementById('preview-lanc').style.display='none'; return; }
+  document.getElementById('prev-deb-nome').textContent  = getNome(deb);
+  document.getElementById('prev-cred-nome').textContent = getNome(cred);
+  document.getElementById('prev-deb-val').textContent   = `D ${fmt(valor)}`;
+  document.getElementById('prev-cred-val').textContent  = `C ${fmt(valor)}`;
+  document.getElementById('preview-lanc').style.display = 'block';
+}
+// ═══════════════════════════════════════════════
+//  UTILITÁRIOS
+// ═══════════════════════════════════════════════
+const fmtN = v => v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const diffMeses = (d1,d2) => {
+  const a=new Date(d1),b=new Date(d2);
+  return (b.getFullYear()-a.getFullYear())*12+(b.getMonth()-a.getMonth());
+};
+
+// ══ INSS 2025 (tabela progressiva)
+function calcINSS(bruto){
+  const faixas=[
+    {ate:1518.00,aliq:0.075},{ate:2793.88,aliq:0.09},
+    {ate:4190.83,aliq:0.12},{ate:8157.41,aliq:0.14}
+  ];
+  let inss=0, base=bruto;
+  let anterior=0;
+  for(const f of faixas){
+    if(bruto<=0) break;
+    const teto=Math.min(bruto,f.ate);
+    if(teto>anterior) inss+=(teto-anterior)*f.aliq;
+    anterior=f.ate;
+    if(bruto<=f.ate) break;
+  }
+  if(bruto>8157.41) inss=908.86; // teto
+  return Math.min(inss,908.86);
+}
+
+// ══ IRRF 2025
+function calcIRRF(base_calc){
+  // base_calc = bruto - inss - dependentes(R$189,59 cada)
+  const faixas=[
+    {ate:2259.20,aliq:0,deducao:0},
+    {ate:2826.65,aliq:0.075,deducao:169.44},
+    {ate:3751.05,aliq:0.15,deducao:381.44},
+    {ate:4664.68,aliq:0.225,deducao:662.77},
+    {ate:Infinity,aliq:0.275,deducao:896.00}
+  ];
+  if(base_calc<=2259.20) return 0;
+  for(const f of faixas){
+    if(base_calc<=f.ate) return Math.max(0, base_calc*f.aliq - f.deducao);
+  }
+  return 0;
+}
+
+function calcFolhaColab(c){
+  // Adicionais simulados por cargo
+  const adicionais = c.salario >= 10000 ? c.salario*0.05 : c.salario >= 6000 ? 200 : 0;
+  const bruto = c.salario + adicionais;
+  const inss = calcINSS(bruto);
+  const base_irrf = bruto - inss;
+  const irrf = calcIRRF(base_irrf);
+  const fgts = bruto * 0.08;
+  const liquido = bruto - inss - irrf;
+  return {bruto, adicionais, inss, irrf, fgts, liquido};
+}
+
+// ═══════════════════════════
+//  NAVEGAÇÃO UNIFICADA
+// ═══════════════════════════
+const NAV_TITLES = {
+  colaboradores:'Colaboradores',folha:'Folha de Pagamento',holerite:'Holerites',
+  ponto:'Ponto Eletrônico',ferias:'Férias',admissao:'Admissão & Demissão',esocial:'eSocial',
+  lancamentos:'Lançamentos',razao:'Razão Geral',plano:'Plano de Contas',
+  balancete:'Balancete',dre:'DRE',balanco:'Balanço Patrimonial',
+  'juridico-processos':'Processos Judiciais','juridico-contratos':'Contratos',
+  'juridico-prazos':'Controle de Prazos','juridico-pareceres':'Pareceres',
+  'juridico-compliance':'Compliance Jurídico',
+  'ia-central':'Central de Agentes de IA','ia-fiscal':'Agente Fiscal',
+  'ia-financeiro':'Agente Financeiro','ia-rh':'Agente RH',
+  'ia-juridico':'Agente Jurídico','ia-contabil':'Agente Contábil'
+};
+function nav(id, el){
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-it').forEach(n=>n.classList.remove('on'));
+  document.getElementById('pane-'+id).classList.add('on');
+  if(el) el.classList.add('on');
+  document.getElementById('bc-title').textContent = NAV_TITLES[id]||id;
+  if(id==='folha')     calcularFolha();
+  if(id==='ferias')    renderFerias();
+  if(id==='ponto')     renderPonto();
+  if(id==='razao')     renderRazao();
+  if(id==='plano')     renderPlano();
+  if(id==='balancete') renderBalancete();
+  if(id==='dre')       renderDRE();
+  if(id==='balanco')   renderBalanco();
+}
+
+function renderColab(){
+  const busca = document.getElementById('busca-colab').value.toLowerCase();
+  const dept  = document.getElementById('fil-dept').value;
+  const status= document.getElementById('fil-status').value;
+
+  let lista = colaboradores.filter(c=>{
+    const matchB = !busca || c.nome.toLowerCase().includes(busca)||c.cargo.toLowerCase().includes(busca)||c.cpf.includes(busca);
+    const matchD = !dept || c.dept===dept;
+    const matchS = !status || c.status===status;
+    return matchB&&matchD&&matchS;
+  });
+
+  const tbody = document.getElementById('tbody-colab');
+  tbody.innerHTML = lista.map(c=>{
+    const bs={'Ativo':'b-ok','Férias':'b-pend','Afastado':'b-err'}[c.status]||'b-gray';
+    return `<tr>
+      <td class="mono">${c.mat}</td>
+      <td><b>${c.nome}</b></td>
+      <td>${c.cargo}</td>
+      <td>${c.dept}</td>
+      <td>${new Date(c.admissao+'T00:00:00').toLocaleDateString('pt-BR')}</td>
+      <td style="font-weight:700">${fmt(c.salario)}</td>
+      <td><span class="badge ${bs}">${c.status}</span></td>
+      <td style="white-space:nowrap">
+        <button class="btn btn-o btn-sm" onclick="verHolerite('${c.mat}')">Holerite</button>
+        <button class="btn btn-o btn-sm" style="margin-left:4px" onclick="showToast('Perfil de ${c.nome} aberto','ok')">Perfil</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // KPIs
+  const ativos = colaboradores.filter(c=>c.status==='Ativo').length;
+  const emFerias = colaboradores.filter(c=>c.status==='Férias').length;
+  const massa = colaboradores.filter(c=>c.status!=='Demitido').reduce((s,c)=>s+c.salario,0);
+  document.getElementById('kpi-ativos').textContent = ativos;
+  document.getElementById('kpi-ferias').textContent = emFerias;
+  document.getElementById('kpi-massa').textContent = `R$${(massa/1000).toFixed(0)}K`;
+  document.getElementById('qtd-colab').textContent = colaboradores.length;
+}
+
+function verHolerite(mat){
+  nav('holerite', document.querySelector('.nav-it:nth-child(3)'));
+  document.getElementById('sel-hol-emp').value = mat;
+  renderHolerite();
+}
+
+// ═══════════════════════════════════════════════
+//  FOLHA DE PAGAMENTO
+// ═══════════════════════════════════════════════
+function calcularFolha(){
+  renderFolha();
+  showToast('Folha recalculada com sucesso','ok');
+}
+
+function renderFolha(){
+  const deptF = document.getElementById('fil-folha-dept').value;
+  let lista = colaboradores.filter(c=>c.status!=='Demitido'&&(!deptF||c.dept===deptF));
+
+  let tBruto=0,tINSS=0,tIRRF=0,tFGTS=0,tLiq=0;
+
+  const tbody = document.getElementById('tbody-folha');
+  tbody.innerHTML = lista.map(c=>{
+    const {bruto,adicionais,inss,irrf,fgts,liquido} = calcFolhaColab(c);
+    tBruto+=bruto; tINSS+=inss; tIRRF+=irrf; tFGTS+=fgts; tLiq+=liquido;
+    return `<tr>
+      <td class="mono">${c.mat}</td>
+      <td><b>${c.nome}</b></td>
+      <td>${c.dept}</td>
+      <td>${fmt(c.salario)}</td>
+      <td style="color:var(--green)">${adicionais>0?'+'+fmt(adicionais):'—'}</td>
+      <td style="font-weight:700">${fmt(bruto)}</td>
+      <td style="color:var(--red)">${fmt(inss)}</td>
+      <td style="color:var(--red)">${fmt(irrf)}</td>
+      <td style="font-weight:700;color:var(--green)">${fmt(liquido)}</td>
+      <td style="color:var(--yellow)">${fmt(fgts)}</td>
+      <td><button class="btn btn-o btn-sm" onclick="verHolerite('${c.mat}')">Ver</button></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('f-bruto').textContent = fmt(tBruto);
+  document.getElementById('f-inss').textContent  = fmt(tINSS);
+  document.getElementById('f-irrf').textContent  = fmt(tIRRF);
+  document.getElementById('f-fgts').textContent  = fmt(tFGTS);
+  document.getElementById('f-liq').textContent   = fmt(tLiq);
+}
+
+function fecharFolha(){
+  showToast('Folha de Junho/2025 fechada e enviada para pagamento','ok');
+}
+
+// ═══════════════════════════════════════════════
+//  HOLERITE
+// ═══════════════════════════════════════════════
+function popularSelectsHolerite(){
+  const s1 = document.getElementById('sel-hol-emp');
+  const s2 = document.getElementById('dem-emp');
+  const s3 = document.getElementById('fer-emp');
+  colaboradores.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c.mat;
+    opt.textContent = `${c.nome} (${c.mat})`;
+    s1.appendChild(opt.cloneNode(true));
+    s3.appendChild(opt.cloneNode(true));
+    // Demissão: só quem não está demitido
+    if(c.status !== 'Demitido') s2.appendChild(opt.cloneNode(true));
+  });
+}
+
+function renderHolerite(){
+  const mat   = document.getElementById('sel-hol-emp').value;
+  const comp  = document.getElementById('sel-hol-comp').value;
+  if(!mat){ document.getElementById('hol-container').innerHTML='<p style="color:var(--g4);font-size:13px;text-align:center;padding:40px">Selecione um colaborador para visualizar o holerite.</p>'; return; }
+
+  const c = colaboradores.find(x=>x.mat===mat);
+  if(!c) return;
+  const {bruto,adicionais,inss,irrf,fgts,liquido} = calcFolhaColab(c);
+  const meses_empr = diffMeses(c.admissao, '2025-06-17');
+  const comp_label = {
+    '2025-06':'Junho/2025','2025-05':'Maio/2025','2025-04':'Abril/2025'
+  }[comp]||comp;
+
+  const html=`
+  <div class="hol">
+    <div class="hol-head">
+      <h2>HOLERITE DE PAGAMENTO</h2>
+      <p>Empresa: Tech Solutions Ltda &nbsp;|&nbsp; CNPJ: 12.345.678/0001-90 &nbsp;|&nbsp; Competência: ${comp_label}</p>
+    </div>
+    <div class="hol-emp">
+      <div><div class="fe">Nome</div><div class="fv">${c.nome}</div></div>
+      <div><div class="fe">Matrícula</div><div class="fv">${c.mat}</div></div>
+      <div><div class="fe">CPF</div><div class="fv">${c.cpf}</div></div>
+      <div><div class="fe">PIS/PASEP</div><div class="fv">${c.pis}</div></div>
+      <div><div class="fe">Cargo</div><div class="fv">${c.cargo}</div></div>
+      <div><div class="fe">Departamento</div><div class="fv">${c.dept}</div></div>
+      <div><div class="fe">Admissão</div><div class="fv">${new Date(c.admissao+'T00:00:00').toLocaleDateString('pt-BR')}</div></div>
+      <div><div class="fe">Tempo na Empresa</div><div class="fv">${meses_empr} meses</div></div>
+    </div>
+
+    <div class="hol-section">
+      <h3>Proventos</h3>
+      <div class="hol-row"><span class="desc">Salário Base</span><span class="ref">30</span><span class="val plus">${fmt(c.salario)}</span></div>
+      ${adicionais>0?`<div class="hol-row"><span class="desc">Adicional por Senioridade</span><span class="ref">—</span><span class="val plus">${fmt(adicionais)}</span></div>`:''}
+      <div class="hol-row bold"><span class="desc">Total de Proventos</span><span class="ref"></span><span class="val plus">${fmt(bruto)}</span></div>
+    </div>
+
+    <div class="hol-section">
+      <h3>Descontos</h3>
+      <div class="hol-row"><span class="desc">INSS — Previdência Social (tabela progressiva)</span><span class="ref">—</span><span class="val minus">${fmt(inss)}</span></div>
+      <div class="hol-row"><span class="desc">IRRF — Imposto de Renda Retido na Fonte</span><span class="ref">—</span><span class="val minus">${fmt(irrf)}</span></div>
+      <div class="hol-row bold"><span class="desc">Total de Descontos</span><span class="ref"></span><span class="val minus">${fmt(inss+irrf)}</span></div>
+    </div>
+
+    <div class="hol-section">
+      <h3>Informações Adicionais</h3>
+      <div class="hol-row"><span class="desc">Base FGTS</span><span class="ref">—</span><span class="val">${fmt(bruto)}</span></div>
+      <div class="hol-row"><span class="desc">FGTS do Mês (8% — depositado pela empresa)</span><span class="ref">—</span><span class="val">${fmt(fgts)}</span></div>
+      <div class="hol-row"><span class="desc">Base de Cálculo IRRF</span><span class="ref">—</span><span class="val">${fmt(bruto-inss)}</span></div>
+    </div>
+
+    <div class="hol-total">
+      <div class="tl">SALÁRIO LÍQUIDO A RECEBER</div>
+      <div class="tv">${fmt(liquido)}</div>
+    </div>
+  </div>`;
+
+  document.getElementById('hol-container').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+//  PONTO ELETRÔNICO
+// ═══════════════════════════════════════════════
+function renderPonto(){
+  const busca = document.getElementById('busca-ponto').value.toLowerCase();
+  const dept  = document.getElementById('fil-ponto-dept').value;
+
+  const lista = colaboradores.filter(c=>
+    c.status!=='Demitido' &&
+    (!busca || c.nome.toLowerCase().includes(busca)) &&
+    (!dept || c.dept===dept)
+  );
+
+  // Dados simulados realistas por colaborador (seed by index)
+  const tbody = document.getElementById('tbody-ponto');
+  tbody.innerHTML = lista.map((c,i)=>{
+    const dias = 17 + (i%3); // dias trabalhados no mês parcial
+    const horasNorm = dias*8;
+    const horasExtra = [0,2,4,6,1,3,0,2][i%8];
+    const faltas = c.status==='Férias'?10:[0,0,0,1,0,0,0,0,0][i%9];
+    const atrasos = [0,1,0,0,2,0,1,0][i%8];
+    const banco = horasExtra - atrasos*0.5;
+
+    const bfalta = faltas>0?`<span style="color:var(--red);font-weight:700">${faltas}</span>`:'0';
+    const batraso = atrasos>0?`<span style="color:var(--yellow);font-weight:700">${atrasos}</span>`:'0';
+    const bbanco = banco>0?`<span style="color:var(--green);font-weight:600">+${banco}h</span>`:`<span style="color:var(--red)">${banco}h</span>`;
+
+    return `<tr>
+      <td><b>${c.nome}</b></td>
+      <td>${c.dept}</td>
+      <td>${dias}</td>
+      <td>${horasNorm}h</td>
+      <td style="color:var(--green);font-weight:600">${horasExtra>0?'+'+horasExtra+'h':'—'}</td>
+      <td>${bfalta}</td>
+      <td>${batraso}</td>
+      <td>${bbanco}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════
+//  FÉRIAS
+// ═══════════════════════════════════════════════
+function renderFerias(){
+  const lista = document.getElementById('lista-ferias');
+  lista.innerHTML = colaboradores.map(c=>{
+    const meses = diffMeses(c.admissao,'2025-06-17');
+    const periodos = Math.floor(meses/12);
+    const saldo = periodos*30 - (c.status==='Férias'?30:0) - Math.floor(Math.random()*10);
+    const pct = Math.min(100, Math.max(0, ((meses%12)/12)*100));
+    const venc = meses>=24 && saldo<0;
+    const cor = venc?'var(--red)':saldo>20?'var(--green)':'var(--yellow)';
+    const bs = c.status==='Férias'?'b-pend':venc?'b-err':'b-ok';
+    const sl = c.status==='Férias'?'Em Gozo':venc?'Vencido':'Disponível';
+
+    return `<div class="fer-row">
+      <div style="width:180px"><b>${c.nome}</b><div style="font-size:10px;color:var(--g4)">${c.dept}</div></div>
+      <div style="font-size:11px;color:var(--g4)">Admissão: ${new Date(c.admissao+'T00:00:00').toLocaleDateString('pt-BR')}</div>
+      <div style="font-size:11px;color:var(--g4)">${periodos} período(s) completo(s)</div>
+      <div>
+        <div style="font-size:10px;color:var(--g4);margin-bottom:4px">Período aquisitivo atual: ${Math.round(pct)}%</div>
+        <div class="fer-bar-wrap"><div class="fer-bar" style="width:${pct}%;background:var(--accent)"></div></div>
+      </div>
+      <div style="font-weight:700;color:${cor}">${saldo>0?saldo+' dias':saldo<0?'Vencido':'0 dias'}</div>
+      <span class="badge ${bs}">${sl}</span>
+      <button class="btn btn-o btn-sm" onclick="abrirModal('modal-ferias');document.getElementById('fer-emp').value='${c.mat}'">Agendar</button>
+    </div>`;
+  }).join('');
+
+  const emFerias = colaboradores.filter(c=>c.status==='Férias').length;
+  if(document.getElementById('kpi-ferias2')) document.getElementById('kpi-ferias2').textContent = emFerias;
+}
+
+function calcFerias(){
+  const mat = document.getElementById('fer-emp').value;
+  if(!mat) return;
+  const c = colaboradores.find(x=>x.mat===mat);
+  if(!c) return;
+  const dias = parseFloat(document.getElementById('fer-dias').value)||30;
+  const abono = parseFloat(document.getElementById('fer-abono').value)||0;
+  const brutoFer = (c.salario/30)*dias;
+  const tercio = brutoFer/3;
+  const brutoAbono = (c.salario/30)*abono;
+  const total = brutoFer + tercio + brutoAbono;
+  const inss = calcINSS(total);
+  const liq = total - inss;
+  document.getElementById('cf-bruto').textContent = fmt(brutoFer);
+  document.getElementById('cf-tercio').textContent = fmt(tercio);
+  document.getElementById('cf-abono').textContent = abono>0?fmt(brutoAbono):'—';
+  document.getElementById('cf-inss').textContent = fmt(inss);
+  document.getElementById('cf-liq').textContent = fmt(liq);
+}
+
+function agendarFerias(){
+  const mat = document.getElementById('fer-emp').value;
+  const inicio = document.getElementById('fer-inicio').value;
+  if(!mat||!inicio){ showToast('Preencha colaborador e data de início','err'); return; }
+  const c = colaboradores.find(x=>x.mat===mat);
+  fecharModal('modal-ferias');
+  showToast(`Férias de ${c.nome} agendadas com sucesso`,'ok');
+}
+
+// ═══════════════════════════════════════════════
+//  ADMISSÃO / DEMISSÃO
+// ═══════════════════════════════════════════════
+document.getElementById('f-salario').addEventListener('input',function(){
+  const v = parseFloat(this.value)||0;
+  const fgts = v*0.08;
+  const emp_inss = v*0.20;
+  document.getElementById('cp-bruto').textContent = fmt(v);
+  document.getElementById('cp-inss-emp').textContent = fmt(emp_inss);
+  document.getElementById('cp-fgts').textContent = fmt(fgts);
+  document.getElementById('cp-total').textContent = fmt(v+fgts+emp_inss);
+});
+
+function admitirColaborador(){
+  const nome = document.getElementById('f-nome').value.trim();
+  const cargo = document.getElementById('f-cargo').value.trim();
+  const dept = document.getElementById('f-dept').value;
+  const salario = parseFloat(document.getElementById('f-salario').value);
+  const admissao = document.getElementById('f-admissao').value;
+  const cpf = document.getElementById('f-cpf').value;
+
+  if(!nome||!cargo||!salario||!admissao||!cpf){
+    showToast('Preencha todos os campos obrigatórios','err'); return;
+  }
+  if(salario<1412){
+    showToast('Salário não pode ser inferior ao mínimo (R$ 1.412,00)','err'); return;
+  }
+
+  const mat = 'RH-'+String(colaboradores.length+1).padStart(4,'0');
+  colaboradores.push({mat,nome,cargo,dept,admissao,salario,status:'Ativo',cpf,pis:'000.00000.00-0',nasc:''});
+  fecharModal('modal-admissao');
+  renderColab();
+  showToast(`${nome} admitido(a) com sucesso · ${mat}`,'ok');
+  document.getElementById('f-nome').value='';
+  document.getElementById('f-cargo').value='';
+  document.getElementById('f-salario').value='';
+  document.getElementById('f-cpf').value='';
+}
+function calcRescisao(){
+  const mat      = document.getElementById('dem-emp').value;
+  const dataStr  = document.getElementById('dem-data').value;
+  if(!mat || !dataStr) return;
+
+  const c    = colaboradores.find(x=>x.mat===mat);
+  if(!c) return;
+
+  const tipo  = document.getElementById('dem-tipo').value;
+  const aviso = document.getElementById('dem-aviso').value;
+
+  const dataDem   = new Date(dataStr + 'T00:00:00');
+  const dataAdm   = new Date(c.admissao + 'T00:00:00');
+  const mesesTotal = diffMeses(c.admissao, dataStr);
+
+  // Dias trabalhados no mês da demissão
+  const diasTrab = dataDem.getDate();
+
+  // Saldo de salário — dias trabalhados no mês corrente
+  const saldo = (c.salario / 30) * diasTrab;
+
+  // Aviso prévio proporcional: 30 dias + 3 dias por ano completo (máx 90)
+  const anosCompletos = Math.floor(mesesTotal / 12);
+  const diasAviso = Math.min(30 + anosCompletos * 3, 90);
+  const valorAviso = tipo === 'justa' ? 0
+    : aviso === 'indenizado' ? (c.salario / 30) * diasAviso
+    : aviso === 'dispensa'   ? 0
+    : 0; // trabalhado: não entra no pagamento
+
+  // 13° proporcional — meses trabalhados no ano corrente (Jan até mês demissão)
+  // Justa causa: não tem 13°
+  const mesesAno = dataDem.getMonth() + 1; // 1–12
+  const decimo = tipo === 'justa' ? 0 : (c.salario / 12) * mesesAno;
+
+  // Férias proporcionais + 1/3 — meses do período aquisitivo em curso
+  // Justa causa: não tem férias proporcionais
+  const mesesAquis = mesesTotal % 12;
+  const ferBruto   = tipo === 'justa' ? 0 : (c.salario / 12) * mesesAquis;
+  const ferTotal   = ferBruto * (4 / 3); // + 1/3 constitucional
+
+  // Multa FGTS: 40% (sem justa causa) ou 20% (acordo §6°) sobre saldo FGTS
+  // Saldo FGTS estimado = 8% do salário × meses trabalhados
+  const saldoFGTS = c.salario * 0.08 * mesesTotal;
+  const multaFGTS = tipo === 'sem-justa' ? saldoFGTS * 0.40
+    : tipo === 'acordo'    ? saldoFGTS * 0.20
+    : 0;
+
+  const totalBruto = saldo + valorAviso + decimo + ferTotal + multaFGTS;
+
+  // INSS sobre verbas tributáveis (saldo + aviso indenizado + 13°)
+  const baseTributavel = saldo + valorAviso + decimo;
+  const inssDesc  = calcINSS(baseTributavel);
+  const irrfDesc  = calcIRRF(baseTributavel - inssDesc);
+  const totalLiq  = totalBruto - inssDesc - irrfDesc;
+
+  // Guardar no elemento para uso no confirm
+  document.getElementById('calc-rescisao').dataset.totalBruto = totalBruto;
+  document.getElementById('calc-rescisao').dataset.totalLiq   = totalLiq;
+  document.getElementById('calc-rescisao').dataset.diasAviso  = diasAviso;
+  document.getElementById('calc-rescisao').dataset.mesesAno   = mesesAno;
+  document.getElementById('calc-rescisao').dataset.mesesAquis = mesesAquis;
+
+  document.getElementById('r-saldo').textContent  = fmt(saldo);
+  document.getElementById('r-aviso').textContent  = aviso === 'trabalhado' ? '(trabalhado)' : fmt(valorAviso);
+  document.getElementById('r-13').textContent     = tipo === 'justa' ? '—' : `${fmt(decimo)} (${mesesAno}/12 avos)`;
+  document.getElementById('r-fer').textContent    = tipo === 'justa' ? '—' : `${fmt(ferTotal)} (${mesesAquis}/12 avos)`;
+  document.getElementById('r-multa').textContent  = fmt(multaFGTS);
+  document.getElementById('r-inss').textContent   = fmt(inssDesc);
+  document.getElementById('r-irrf').textContent   = fmt(irrfDesc);
+  document.getElementById('r-total').textContent  = fmt(totalLiq);
+}
+
+['dem-emp','dem-data','dem-tipo','dem-aviso'].forEach(id =>
+  document.getElementById(id).addEventListener('change', calcRescisao)
+);
+
+// Ao selecionar colaborador, popular data com hoje
+document.getElementById('dem-emp').addEventListener('change', function(){
+  const dataInput = document.getElementById('dem-data');
+  if(!dataInput.value) dataInput.value = new Date().toISOString().slice(0,10);
+  calcRescisao();
+});
+
+function demitirColaborador(){
+  const mat     = document.getElementById('dem-emp').value;
+  const dataStr = document.getElementById('dem-data').value;
+  const tipo    = document.getElementById('dem-tipo').value;
+  const aviso   = document.getElementById('dem-aviso').value;
+  const obs     = document.getElementById('dem-obs').value.trim();
+
+  if(!mat)     { showToast('Selecione um colaborador','err'); return; }
+  if(!dataStr) { showToast('Informe a data de demissão','err'); return; }
+
+  const calcBox   = document.getElementById('calc-rescisao');
+  const totalLiq  = parseFloat(calcBox.dataset.totalLiq  || 0);
+  const totalBruto= parseFloat(calcBox.dataset.totalBruto|| 0);
+  if(!totalBruto) { showToast('Clique em outro campo para calcular antes de confirmar','err'); return; }
+
+  const tipoLabel = {'sem-justa':'Sem Justa Causa','justa':'Justa Causa','pedido':'Pedido de Demissão','acordo':'Acordo (§6°)'}[tipo];
+  const avisoLabel= {'trabalhado':'Trabalhado','indenizado':'Indenizado','dispensa':'Dispensado'}[aviso];
+
+  const c = colaboradores.find(x=>x.mat===mat);
+
+  // Marcar como demitido nos dados
+  c.status       = 'Demitido';
+  c.dataDemissao = dataStr;
+  c.tipoDemissao = tipoLabel;
+  c.avisoPrevio  = avisoLabel;
+  c.totalRescisao= totalLiq;
+  c.obsDemissao  = obs;
+
+  // Remover do select de demissão
+  const optEl = document.querySelector(`#dem-emp option[value="${mat}"]`);
+  if(optEl) optEl.remove();
+
+  // Inserir na tabela de demissões
+  const tbody = document.querySelector('#pane-admissao table:last-of-type tbody');
+  const dataDem = new Date(dataStr+'T00:00:00').toLocaleDateString('pt-BR');
+  tbody.insertAdjacentHTML('afterbegin',`
+    <tr>
+      <td><b>${c.nome}</b></td>
+      <td>${c.cargo}</td>
+      <td>${c.dept}</td>
+      <td>${dataDem}</td>
+      <td>${tipoLabel}</td>
+      <td>${avisoLabel}</td>
+      <td><span class="badge b-pend">Pendente</span></td>
+      <td style="font-weight:700;color:var(--red)">${fmt(totalLiq)}</td>
+      <td><button class="btn btn-o btn-sm" onclick="verRescisao('${mat}')">Termo</button></td>
+    </tr>`);
+
+  // Inserir evento no eSocial
+  const esocialTbody = document.querySelector('#pane-esocial table tbody');
+  const agora = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  esocialTbody.insertAdjacentHTML('afterbegin',`
+    <tr>
+      <td class="mono">S-2299</td>
+      <td>Demissão</td>
+      <td>${c.nome}</td>
+      <td>${new Date(dataStr+'T00:00:00').toLocaleDateString('pt-BR',{month:'short',year:'numeric'})}</td>
+      <td>Hoje ${agora}</td>
+      <td><span class="badge b-pend">Pendente</span></td>
+      <td><button class="btn btn-p btn-sm" onclick="this.closest('tr').querySelector('.badge').className='badge b-ok';this.closest('tr').querySelector('.badge').textContent='Transmitido';showToast('S-2299 transmitido com sucesso','ok');this.remove()">Enviar</button></td>
+    </tr>`);
+
+  fecharModal('modal-demissao');
+  renderColab();
+  renderFolha();
+
+  // Limpar modal para próximo uso
+  document.getElementById('dem-emp').value  = '';
+  document.getElementById('dem-data').value = '';
+  document.getElementById('dem-obs').value  = '';
+  ['r-saldo','r-aviso','r-13','r-fer','r-multa','r-inss','r-irrf','r-total'].forEach(id=>{
+    document.getElementById(id).textContent = '—';
+  });
+
+  showToast(`Demissão de ${c.nome} registrada · Rescisão: ${fmt(totalLiq)}`,'ok');
+}
+
+function verRescisao(mat){
+  const c = colaboradores.find(x=>x.mat===mat);
+  if(!c) return;
+  alert(`TERMO DE RESCISÃO — ${c.nome}\nData: ${new Date(c.dataDemissao+'T00:00:00').toLocaleDateString('pt-BR')}\nTipo: ${c.tipoDemissao}\nAviso: ${c.avisoPrevio}\nTotal Líquido: ${fmt(c.totalRescisao)}\n${c.obsDemissao?'Obs: '+c.obsDemissao:''}`);
+}
+// ═══════════════════════════════════════════════
+//  MODAIS
+// ═══════════════════════════════════════════════
+function abrirModal(id){
+  document.getElementById(id).classList.add('open');
+}
+function fecharModal(id){
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
+});
+
+// ═══════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════
+function showToast(msg, tipo='ok'){
+  const t = document.getElementById('toast');
+  t.textContent = (tipo==='ok'?'✓ ':'✕ ') + msg;
+  t.className = `toast ${tipo} show`;
+  clearTimeout(t._to);
+  t._to = setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ═══════════════════════════════════════════════
+//  EXPORTAR CSV
+// ═══════════════════════════════════════════════
+function exportarCSV(){
+  const header = 'Matrícula,Nome,Cargo,Departamento,Admissão,Salário,Status';
+  const rows = colaboradores.map(c=>`${c.mat},"${c.nome}","${c.cargo}","${c.dept}",${c.admissao},${c.salario},${c.status}`);
+  const csv = [header,...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent('\uFEFF'+csv);
+  a.download = 'colaboradores_jun2025.csv';
+  a.click();
+  showToast('CSV exportado com sucesso','ok');
+}
+
+// MÁSCARA CPF
+function mascaraCPF(el){
+  let v=el.value.replace(/\D/g,'');
+  v=v.replace(/(\d{3})(\d)/,'$1.$2');
+  v=v.replace(/(\d{3})(\d)/,'$1.$2');
+  v=v.replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+  el.value=v;
+}
+
+// Atualizar preview ao trocar contas
+['l-deb','l-cred'].forEach(id=>document.getElementById(id).addEventListener('change',previewLanc));
+
+// ═══════════════════════════════════════════
+//  RAZÃO
+// ═══════════════════════════════════════════
+function renderRazao(){
+  const cod  = document.getElementById('sel-razao-conta').value;
+  const mes  = document.getElementById('fil-razao-mes').value;
+  const empty = document.getElementById('razao-empty');
+  const kpis  = document.getElementById('razao-kpis');
+  const cardEl= document.getElementById('razao-card');
+
+  if(!cod){ empty.style.display='block'; kpis.style.display='none'; cardEl.style.display='none'; return; }
+
+  const conta = planoContas.find(c=>c.cod===cod);
+  const movs  = lancamentos.filter(l=>l.data.startsWith(mes)&&(l.deb===cod||l.cred===cod));
+
+  // Saldo anterior = movimentos de meses anteriores
+  const anterior = lancamentos.filter(l=>l.data<mes+'-01');
+  let saldoAnt = 0;
+  anterior.forEach(l=>{
+    if(l.deb===cod)  saldoAnt += conta.nat==='D' ? l.valor : -l.valor;
+    if(l.cred===cod) saldoAnt += conta.nat==='C' ? l.valor : -l.valor;
+  });
+
+  let totDeb=0, totCred=0, saldo=saldoAnt;
+  const tbody = document.getElementById('tbody-razao');
+  tbody.innerHTML = '';
+
+  // Saldo inicial
+  tbody.insertAdjacentHTML('beforeend',`<tr style="background:var(--g1)">
+    <td colspan="3" style="font-weight:700;color:var(--g4)">Saldo anterior</td>
+    <td colspan="2" style="font-weight:700">${fmt(saldoAnt)}</td>
+  </tr>`);
+
+  movs.sort((a,b)=>a.data.localeCompare(b.data)).forEach(l=>{
+    const isDeb  = l.deb===cod;
+    const valDeb = isDeb?l.valor:0;
+    const valCred= !isDeb?l.valor:0;
+    if(conta.nat==='D') saldo += isDeb ? l.valor : -l.valor;
+    else                saldo += !isDeb? l.valor : -l.valor;
+    totDeb += valDeb; totCred += valCred;
+    tbody.insertAdjacentHTML('beforeend',`<tr>
+      <td>${fmtD(l.data)}</td>
+      <td>${l.hist}</td>
+      <td style="color:var(--red);font-weight:${valDeb?'700':'400'}">${valDeb?fmt(valDeb):'—'}</td>
+      <td style="color:var(--green);font-weight:${valCred?'700':'400'}">${valCred?fmt(valCred):'—'}</td>
+      <td style="font-weight:700">${fmt(saldo)}</td>
+    </tr>`);
+  });
+
+  tbody.insertAdjacentHTML('beforeend',`<tr class="tr-total">
+    <td colspan="2">Total do Período</td>
+    <td style="color:var(--red)">${fmt(totDeb)}</td>
+    <td style="color:var(--green)">${fmt(totCred)}</td>
+    <td>${fmt(saldo)}</td>
+  </tr>`);
+
+  document.getElementById('r-saldo-ant').textContent = fmt(saldoAnt);
+  document.getElementById('r-tot-deb').textContent   = fmt(totDeb);
+  document.getElementById('r-tot-cred').textContent  = fmt(totCred);
+  document.getElementById('r-saldo-at').textContent  = fmt(saldo);
+  document.getElementById('razao-titulo').textContent = `${conta.cod} — ${conta.nome}`;
+  document.getElementById('razao-natureza').textContent = `Natureza: ${conta.nat==='D'?'Devedora':'Credora'} · Tipo: ${conta.tipo}`;
+
+  empty.style.display='none';
+  kpis.style.display='grid';
+  cardEl.style.display='block';
+}
+
+// ═══════════════════════════════════════════
+//  PLANO DE CONTAS
+// ═══════════════════════════════════════════
+function renderPlano(){
+  const busca = document.getElementById('busca-plano').value.toLowerCase();
+  const filtTipo = document.getElementById('fil-plano-tipo').value;
+  const container = document.getElementById('plano-container');
+
+  // Grupos raiz (nivel 1)
+  const grupos = planoContas.filter(c=>c.nivel===1&&(!filtTipo||c.tipo===filtTipo));
+  let html = '';
+
+  grupos.forEach(g=>{
+    const filhos = planoContas.filter(c=>c.pai===g.cod&&c.nivel===2&&(!filtTipo||c.tipo===filtTipo));
+    const tipoLabel={A:'Ativo',P:'Passivo',PL:'Pat.Líquido',R:'Receita',D:'Despesa'}[g.tipo];
+    const tipoClass={A:'tipo-a',P:'tipo-p',PL:'tipo-p',R:'tipo-r',D:'tipo-d'}[g.tipo];
+    html+=`<div class="pc-grupo">
+      <div class="pc-hdr" onclick="togglePC(this)">
+        <span class="pc-arrow">▶</span>
+        <span class="pc-code">${g.cod}</span>
+        <span>${g.nome}</span>
+        <span class="pc-tipo ${tipoClass}">${tipoLabel}</span>
+      </div>
+      <div class="pc-children">`;
+
+    filhos.forEach(f=>{
+      const analiticas = planoContas.filter(c=>c.pai===f.cod&&c.nivel===3&&
+        (!busca||(c.nome.toLowerCase().includes(busca)||c.cod.includes(busca)))&&
+        (!filtTipo||c.tipo===filtTipo));
+
+      if(!busca){
+        const natClass = f.nat==='D'?'tipo-d':'tipo-c';
+        html+=`<div class="pc-grupo">
+          <div class="pc-hdr" onclick="togglePC(this)" style="background:var(--white);margin-top:4px">
+            <span class="pc-arrow">▶</span>
+            <span class="pc-code">${f.cod}</span>
+            <span>${f.nome}</span>
+            <span class="pc-tipo ${natClass}">${f.nat==='D'?'Devedora':'Credora'}</span>
+          </div>
+          <div class="pc-children">`;
+      }
+
+      analiticas.forEach(a=>{
+        const natClass = a.nat==='D'?'tipo-d':'tipo-c';
+        const movs = lancamentos.filter(l=>l.deb===a.cod||l.cred===a.cod).length;
+        html+=`<div class="pc-item">
+          <span class="pc-code">${a.cod}</span>
+          <span>${a.nome}</span>
+          ${movs>0?`<span style="font-size:10px;color:var(--g4);margin-left:8px">${movs} mov.</span>`:''}
+          <span class="pc-tipo ${natClass}">${a.nat==='D'?'Devedora':'Credora'}</span>
+          <button class="btn btn-o btn-sm" style="margin-left:8px" onclick="document.getElementById('sel-razao-conta').value='${a.cod}';nav('razao',document.querySelectorAll('.nav-it')[1])">Razão</button>
+        </div>`;
+      });
+
+      if(!busca) html+=`</div></div>`;
+    });
+    html+=`</div></div>`;
+  });
+
+  container.innerHTML = html;
+  document.getElementById('qtd-contas').textContent = planoContas.filter(c=>c.nivel===3).length;
+}
+
+function togglePC(el){
+  const arrow    = el.querySelector('.pc-arrow');
+  const children = el.nextElementSibling;
+  const isOpen   = children.classList.contains('open');
+  children.classList.toggle('open',!isOpen);
+  arrow.classList.toggle('open',!isOpen);
+}
+
+// ═══════════════════════════════════════════
+//  BALANCETE
+// ═══════════════════════════════════════════
+function renderBalancete(){
+  const analiticas = contaAnalitica();
+  let totSAD=0,totSAC=0,totMovD=0,totMovC=0,totAtD=0,totAtC=0;
+  const tbody = document.getElementById('tbody-balancete');
+  tbody.innerHTML = '';
+
+  // Agrupar por tipo
+  const tipos = ['A','P','PL','R','D'];
+  const tipoNome = {A:'ATIVO',P:'PASSIVO',PL:'PATRIMÔNIO LÍQUIDO',R:'RECEITAS',D:'DESPESAS E CUSTOS'};
+
+  tipos.forEach(t=>{
+    const contas = analiticas.filter(c=>c.tipo===t);
+    if(!contas.length) return;
+    tbody.insertAdjacentHTML('beforeend',`<tr class="tr-group"><td colspan="8">${tipoNome[t]}</td></tr>`);
+
+    contas.forEach(c=>{
+      // Saldo anterior (meses anteriores a jun/2025)
+      let sAntD=0, sAntC=0;
+      lancamentos.filter(l=>l.data<'2025-06-01').forEach(l=>{
+        if(l.deb===c.cod) sAntD+=l.valor;
+        if(l.cred===c.cod) sAntC+=l.valor;
+      });
+      const sAnt = c.nat==='D' ? sAntD-sAntC : sAntC-sAntD;
+
+      // Movimentos do mês
+      let movD=0,movC=0;
+      lancamentos.filter(l=>l.data.startsWith('2025-06')).forEach(l=>{
+        if(l.deb===c.cod) movD+=l.valor;
+        if(l.cred===c.cod) movC+=l.valor;
+      });
+
+      const sAtual = sAnt + (c.nat==='D' ? movD-movC : movC-movD);
+      if(!movD&&!movC&&!sAnt) return; // omitir contas sem movimento
+
+      const fmtZero = v => v? fmt(v) : '—';
+      totSAD+=sAnt>0&&c.nat==='D'?sAnt:0;
+      totSAC+=sAnt>0&&c.nat==='C'?sAnt:0;
+      totMovD+=movD; totMovC+=movC;
+      totAtD+=sAtual>0&&c.nat==='D'?sAtual:0;
+      totAtC+=sAtual>0&&c.nat==='C'?sAtual:0;
+
+      tbody.insertAdjacentHTML('beforeend',`<tr>
+        <td class="mono">${c.cod}</td>
+        <td>${c.nome}</td>
+        <td>${c.nat==='D'&&sAnt>0?fmt(sAnt):'—'}</td>
+        <td>${c.nat==='C'&&sAnt>0?fmt(sAnt):'—'}</td>
+        <td>${movD?fmt(movD):'—'}</td>
+        <td>${movC?fmt(movC):'—'}</td>
+        <td>${c.nat==='D'&&sAtual>0?fmt(sAtual):'—'}</td>
+        <td>${c.nat==='C'&&sAtual>0?fmt(sAtual):'—'}</td>
+      </tr>`);
+    });
+  });
+
+  tbody.insertAdjacentHTML('beforeend',`<tr class="tr-total">
+    <td colspan="2">TOTAL GERAL</td>
+    <td>${fmt(totSAD)}</td><td>${fmt(totSAC)}</td>
+    <td>${fmt(totMovD)}</td><td>${fmt(totMovC)}</td>
+    <td>${fmt(totAtD)}</td><td>${fmt(totAtC)}</td>
+  </tr>`);
+
+  const eq = Math.abs(totMovD-totMovC)<0.01;
+  document.getElementById('bal-status').textContent = eq
+    ? '✓ Débitos = Créditos — Balancete equilibrado'
+    : '✕ Atenção: débitos ≠ créditos';
+  document.getElementById('bal-status').style.color = eq?'var(--green)':'var(--red)';
+}
+
+// ═══════════════════════════════════════════
+//  DRE
+// ═══════════════════════════════════════════
+function renderDRE(){
+  const get = cods => lancamentos
+    .filter(l=>cods.includes(l.deb)||cods.includes(l.cred))
+    .reduce((s,l)=>{
+      const isCred = cods.includes(l.cred);
+      return s + (isCred?l.valor:-l.valor);
+    },0);
+
+  const recBruta   = get(['4.1.1.01','4.1.1.02']);
+  const deducoes   = get(['4.2.1.01','4.2.1.02']);
+  const recLiq     = recBruta - deducoes;
+  const cpv        = get(['5.1.1.01']);
+  const lucroBruto = recLiq - cpv;
+  const despPessoal= get(['5.2.1.01']);
+  const despAdmin  = get(['5.2.1.02','5.2.1.03','5.2.1.04']);
+  const despFin    = get(['5.3.1.01']);
+  const deprec     = get(['5.4.1.01','5.4.1.02']);
+  const ebitda     = lucroBruto - despPessoal - despAdmin;
+  const ebit       = ebitda - deprec;
+  const lair       = ebit - despFin;
+  const irpjCsll   = Math.max(0, lair*0.34);
+  const lucroLiq   = lair - irpjCsll;
+
+  const rows = [
+    {label:'Receita Operacional Bruta',valor:recBruta,nivel:'nivel1',sinal:1},
+    {label:'(-) Devoluções e Impostos sobre Vendas',valor:deducoes,nivel:'nivel2',sinal:-1},
+    {label:'= Receita Operacional Líquida',valor:recLiq,nivel:'nivel1',sinal:1,sep:true},
+    {label:'(-) Custo dos Produtos/Serviços Vendidos',valor:cpv,nivel:'nivel2',sinal:-1},
+    {label:'= Lucro Bruto',valor:lucroBruto,nivel:'nivel1',sinal:1,sep:true},
+    {label:'(-) Despesas com Pessoal',valor:despPessoal,nivel:'nivel2',sinal:-1},
+    {label:'(-) Despesas Administrativas e Operacionais',valor:despAdmin,nivel:'nivel2',sinal:-1},
+    {label:'= EBITDA',valor:ebitda,nivel:'nivel1',sinal:1,sep:true},
+    {label:'(-) Depreciação e Amortização',valor:deprec,nivel:'nivel2',sinal:-1},
+    {label:'= EBIT (Resultado Operacional)',valor:ebit,nivel:'nivel1',sinal:1,sep:true},
+    {label:'(-) Despesas Financeiras',valor:despFin,nivel:'nivel2',sinal:-1},
+    {label:'= LAIR (Antes do IR)',valor:lair,nivel:'nivel1',sinal:1,sep:true},
+    {label:'(-) IRPJ e CSLL (34%)',valor:irpjCsll,nivel:'nivel2',sinal:-1},
+    {label:'= LUCRO LÍQUIDO DO EXERCÍCIO',valor:lucroLiq,nivel:'resultado',sinal:1},
+  ];
+
+  const tbl = document.getElementById('tbl-dre');
+  tbl.innerHTML = '<colgroup><col style="width:60%"><col style="width:20%"><col style="width:20%"></colgroup>'
+    +'<thead><tr><th>Descrição</th><th style="text-align:right">Jan–Jun/2025</th><th style="text-align:right">AV%</th></tr></thead><tbody>';
+
+  rows.forEach(r=>{
+    const val = r.sinal===1?r.valor:-r.valor;
+    const av  = recBruta?((r.valor/recBruta)*100).toFixed(1):'—';
+    const cor = r.nivel==='resultado'?'':val>=0?'color:inherit':'color:var(--red)';
+    if(r.sep) tbl.innerHTML+='<tr class="sep"><td colspan="3"></td></tr>';
+    tbl.innerHTML+=`<tr class="${r.nivel}">
+      <td class="${r.nivel}">${r.label}</td>
+      <td style="text-align:right;font-weight:600;${cor}">${fmt(Math.abs(r.valor))}</td>
+      <td style="text-align:right;color:var(--g4);font-size:11px">${av}%</td>
+    </tr>`;
+  });
+  tbl.innerHTML+='</tbody>';
+
+  document.getElementById('dre-rec').textContent = fmt(recBruta);
+  document.getElementById('dre-cus').textContent = fmt(cpv+despPessoal+despAdmin);
+  document.getElementById('dre-lb').textContent  = fmt(lucroBruto);
+  document.getElementById('dre-ll').textContent  = fmt(lucroLiq);
+
+  const mg = [
+    {label:'Margem Bruta',val:recLiq?lucroBruto/recLiq:0,cor:'var(--green)'},
+    {label:'Margem EBITDA',val:recLiq?ebitda/recLiq:0,cor:'var(--accent)'},
+    {label:'Margem EBIT',val:recLiq?ebit/recLiq:0,cor:'var(--yellow)'},
+    {label:'Margem Líquida',val:recLiq?lucroLiq/recLiq:0,cor:lucroLiq>=0?'var(--green)':'var(--red)'},
+  ];
+  document.getElementById('dre-margens').innerHTML = mg.map(m=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+        <span>${m.label}</span>
+        <span style="font-weight:700;color:${m.cor}">${(m.val*100).toFixed(1)}%</span>
+      </div>
+      <div style="height:6px;background:var(--g2);border-radius:3px">
+        <div style="height:6px;width:${Math.max(0,m.val*100).toFixed(1)}%;background:${m.cor};border-radius:3px"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+//  BALANÇO PATRIMONIAL
+// ═══════════════════════════════════════════
+function getSaldo(cod){
+  const c = planoContas.find(x=>x.cod===cod);
+  if(!c) return 0;
+  let d=0,cr=0;
+  lancamentos.forEach(l=>{ if(l.deb===cod) d+=l.valor; if(l.cred===cod) cr+=l.valor; });
+  return c.nat==='D' ? d-cr : cr-d;
+}
+
+function renderBalanco(){
+  const wrap = document.getElementById('balanco-wrap');
+
+  // ATIVO
+  const caixa     = getSaldo('1.1.1.01')+getSaldo('1.1.1.02')+getSaldo('1.1.1.03');
+  const clientes  = getSaldo('1.1.2.01')+getSaldo('1.1.2.02');
+  const adiant    = getSaldo('1.1.2.03');
+  const estoques  = getSaldo('1.1.3.01')+getSaldo('1.1.3.02')+getSaldo('1.1.3.03');
+  const ativoCirc = caixa+clientes+adiant+estoques;
+  const imob      = getSaldo('1.2.1.01')+getSaldo('1.2.1.02')+getSaldo('1.2.1.03')+getSaldo('1.2.1.04');
+  const ativoTotal= ativoCirc+imob;
+
+  // PASSIVO
+  const fornec    = getSaldo('2.1.1.01');
+  const salarios  = getSaldo('2.1.2.01')+getSaldo('2.1.2.02')+getSaldo('2.1.2.03');
+  const fiscal    = getSaldo('2.1.3.01')+getSaldo('2.1.3.02')+getSaldo('2.1.3.03');
+  const passCirc  = fornec+salarios+fiscal;
+  const emprest   = getSaldo('2.2.1.01');
+  const passTotal = passCirc+emprest;
+
+  // PL (calculado como ativo - passivo + resultados)
+  const capital   = getSaldo('3.1.1.01') || 8000000;
+  const reserva   = getSaldo('3.1.2.01') || 1200000;
+  const lucAcum   = getSaldo('3.1.3.01') || 0;
+  // Resultado do período
+  const recBruta  = lancamentos.filter(l=>['4.1.1.01','4.1.1.02'].includes(l.cred)).reduce((s,l)=>s+l.valor,0);
+  const desp      = lancamentos.filter(l=>l.deb.startsWith('5')).reduce((s,l)=>s+l.valor,0);
+  const resultado = recBruta - desp;
+  const plTotal   = capital + reserva + lucAcum + resultado;
+
+  const eq = Math.abs(ativoTotal-(passTotal+plTotal))<1;
+
+  const row = (label,val,sub=false,total=false,grand=false)=>
+    `<div class="bal-item${sub?' sub':''}${total?' total':''}${grand?' grand':''}">`+
+    `<span>${label}</span><span>${fmt(val)}</span></div>`;
+
+  wrap.innerHTML = `
+  <div class="bal-side">
+    <div class="bal-group">
+      <div class="bal-group-hdr">ATIVO</div>
+      <div class="bal-group-hdr" style="background:var(--g1);color:var(--text);font-size:11px">Ativo Circulante</div>
+      ${row('Disponibilidades',caixa,true)}
+      ${row('Clientes (líquido)',clientes,true)}
+      ${row('Adiantamentos',adiant,true)}
+      ${row('Estoques',estoques,true)}
+      ${row('Total Ativo Circulante',ativoCirc,false,true)}
+      <div class="bal-group-hdr" style="background:var(--g1);color:var(--text);font-size:11px">Ativo Não Circulante</div>
+      ${row('Imobilizado (líquido)',imob,true)}
+      ${row('Total Ativo Não Circulante',imob,false,true)}
+      ${row('TOTAL DO ATIVO',ativoTotal,false,false,true)}
+    </div>
+  </div>
+  <div class="bal-side">
+    <div class="bal-group">
+      <div class="bal-group-hdr">PASSIVO & PATRIMÔNIO LÍQUIDO</div>
+      <div class="bal-group-hdr" style="background:var(--g1);color:var(--text);font-size:11px">Passivo Circulante</div>
+      ${row('Fornecedores',fornec,true)}
+      ${row('Obrigações Trabalhistas',salarios,true)}
+      ${row('Obrigações Fiscais',fiscal,true)}
+      ${row('Total Passivo Circulante',passCirc,false,true)}
+      <div class="bal-group-hdr" style="background:var(--g1);color:var(--text);font-size:11px">Passivo Não Circulante</div>
+      ${row('Empréstimos e Financiamentos',emprest,true)}
+      ${row('Total Passivo Não Circulante',emprest,false,true)}
+      <div class="bal-group-hdr" style="background:var(--g1);color:var(--text);font-size:11px">Patrimônio Líquido</div>
+      ${row('Capital Social',capital,true)}
+      ${row('Reserva Legal',reserva,true)}
+      ${row('Lucros Acumulados',lucAcum+resultado,true)}
+      ${row('Total Patrimônio Líquido',plTotal,false,true)}
+      ${row('TOTAL PASSIVO + PL',passTotal+plTotal,false,false,true)}
+    </div>
+  </div>`;
+
+  document.getElementById('bal-equil').textContent = eq
+    ? '✓ Balanço equilibrado' : '✕ Diferença detectada';
+  document.getElementById('bal-equil').style.color = eq?'var(--green)':'var(--red)';
+}
+
+// ═══════════════════════════════════════════
+//  CONTA NOVA
+// ═══════════════════════════════════════════
+function salvarConta(){
+  const cod   = document.getElementById('c-cod').value.trim();
+  const nome  = document.getElementById('c-nome').value.trim();
+  const tipo  = document.getElementById('c-tipo').value;
+  const nat   = document.getElementById('c-nat').value;
+  const nivel = parseInt(document.getElementById('c-nivel').value);
+  const pai   = document.getElementById('c-pai').value||null;
+
+  if(!cod||!nome){ showToast('Preencha código e nome','err'); return; }
+  if(planoContas.find(c=>c.cod===cod)){ showToast('Código já cadastrado','err'); return; }
+
+  planoContas.push({cod,nome,tipo,nat,nivel,pai});
+  planoContas.sort((a,b)=>a.cod.localeCompare(b.cod));
+  popularSelects();
+  fecharModal('modal-conta');
+  renderPlano();
+  showToast(`Conta ${cod} — ${nome} cadastrada`,'ok');
+  document.getElementById('c-cod').value='';
+  document.getElementById('c-nome').value='';
+}
+
+// ═══════════════════════════════════════════
+//  MODAIS / TOAST
+// ═══════════════════════════════════════════
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); });
+});
+
+
+function exportarLanc(){
+  const header='Nº,Data,Histórico,Conta Débito,Conta Crédito,Valor,Tipo,CC,Usuário';
+  const rows=lancamentos.map(l=>`LÇ-${String(l.id).padStart(5,'0')},${l.data},"${l.hist}","${getNome(l.deb)}","${getNome(l.cred)}",${l.valor},${l.tipo},${l.cc},${l.user}`);
+  const csv=[header,...rows].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent('\uFEFF'+csv);
+  a.download='lancamentos_jun2025.csv';
+  a.click();
+  showToast('Lançamentos exportados','ok');
+}
+
+// ═══════════════════════════════════════════
+//  INIT — popular selects
+// ═══════════════════════════════════════════
+function popularSelects(){
+  const analiticas = contaAnalitica();
+
+  // Selects de lançamento
+  ['l-deb','l-cred'].forEach(id=>{
+    const s=document.getElementById(id);
+    const val=s.value;
+    s.innerHTML='<option value="">— Selecione —</option>';
+    const grupos={};
+    analiticas.forEach(c=>{
+      if(!grupos[c.tipo]) grupos[c.tipo]=[];
+      grupos[c.tipo].push(c);
+    });
+    const tipoNome={A:'Ativo',P:'Passivo',PL:'Patrimônio Líquido',R:'Receita',D:'Despesas/Custos'};
+    Object.entries(grupos).forEach(([t,contas])=>{
+      const og=document.createElement('optgroup');
+      og.label=tipoNome[t]||t;
+      contas.forEach(c=>{
+        const o=document.createElement('option');
+        o.value=c.cod; o.textContent=`${c.cod} — ${c.nome}`;
+        og.appendChild(o);
+      });
+      s.appendChild(og);
+    });
+    if(val) s.value=val;
+  });
+
+  // Select razão
+  const sr=document.getElementById('sel-razao-conta');
+  sr.innerHTML='<option value="">— Selecione a conta —</option>';
+  const grupos2={};
+  analiticas.forEach(c=>{
+    if(!grupos2[c.tipo]) grupos2[c.tipo]=[];
+    grupos2[c.tipo].push(c);
+  });
+  const tipoNome={A:'Ativo',P:'Passivo',PL:'Patrimônio Líquido',R:'Receita',D:'Despesas/Custos'};
+  Object.entries(grupos2).forEach(([t,contas])=>{
+    const og=document.createElement('optgroup');
+    og.label=tipoNome[t]||t;
+    contas.forEach(c=>{
+      const o=document.createElement('option');
+      o.value=c.cod; o.textContent=`${c.cod} — ${c.nome}`;
+      og.appendChild(o);
+    });
+    sr.appendChild(og);
+  });
+
+  // Select pai de conta nova
+  const sp=document.getElementById('c-pai');
+  if(sp){
+    sp.innerHTML='<option value="">— Nenhuma —</option>';
+    planoContas.filter(c=>c.nivel<3).forEach(c=>{
+      const o=document.createElement('option');
+      o.value=c.cod; o.textContent=`${c.cod} — ${c.nome}`;
+      sp.appendChild(o);
+    });
+  }
+}
+
+// ═══════════════════════════
+//  INIT UNIFICADO
+// ═══════════════════════════
+document.getElementById('topdate').textContent = new Date().toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+document.getElementById('l-data').value = new Date().toISOString().slice(0,10);
+
+// popular selects RH
+function popularSelectsRH(){
+  const s1 = document.getElementById('sel-hol-emp');
+  const s2 = document.getElementById('dem-emp');
+  const s3 = document.getElementById('fer-emp');
+  colaboradores.forEach(c=>{
+    const opt = document.createElement('option');
+    opt.value = c.mat;
+    opt.textContent = `${c.nome} (${c.mat})`;
+    s1.appendChild(opt.cloneNode(true));
+    s3.appendChild(opt.cloneNode(true));
+    if(c.status !== 'Demitido') s2.appendChild(opt.cloneNode(true));
+  });
+}
+
+popularSelectsRH();
+popularSelects();   // selects contábeis
+renderColab();
+calcularFolha();
+renderLancamentos();
+
+// ══ AGENTES DE IA ══
+const AGENT_CONFIGS = {
+  'fiscal': {
+    system: `Você é o Agente Fiscal de um ERP corporativo brasileiro. Especialista em: NF-e, NFS-e, CT-e, MDF-e, SPED Fiscal, EFD, ECF, ICMS, IPI, ISS, PIS, COFINS, Simples Nacional, Lucro Real, Lucro Presumido, planejamento tributário e recuperação de créditos. Responda de forma objetiva, técnica e em português. Use bullet points quando listar informações. Seja preciso com prazos, alíquotas e regras fiscais.`,
+    histories: []
+  },
+  'financeiro': {
+    system: `Você é o Agente Financeiro de um ERP corporativo brasileiro. Especialista em: fluxo de caixa, contas a pagar e receber, conciliação bancária, indicadores financeiros (KPIs), gestão de tesouraria, capital de giro, análise de liquidez, solvência, rentabilidade, gestão de cobrança e previsões financeiras. Responda de forma objetiva e prática, com exemplos quando útil. Use português formal.`,
+    histories: []
+  },
+  'rh': {
+    system: `Você é o Agente de RH e Departamento Pessoal de um ERP corporativo brasileiro. Especialista em: folha de pagamento, encargos sociais, INSS, FGTS, IRRF, admissão, demissão, rescisão, férias, 13º salário, eSocial, benefícios, CLT e legislação trabalhista vigente. Responda de forma objetiva e técnica em português. Cite sempre a legislação quando relevante.`,
+    histories: []
+  },
+  'juridico-ia': {
+    system: `Você é o Agente Jurídico de um ERP corporativo brasileiro. Especialista em: contratos empresariais, processos judiciais, prazos processuais, compliance jurídico, LGPD, direito societário, direito trabalhista, direito tributário e orientação legal geral. SEMPRE inclua um aviso discreto que suas orientações são gerais e não substituem assessoria jurídica especializada. Responda em português formal e de forma objetiva.`,
+    histories: []
+  },
+  'contabil': {
+    system: `Você é o Agente Contábil de um ERP corporativo brasileiro. Especialista em: lançamentos contábeis pelo método das partidas dobradas, plano de contas, DRE, balanço patrimonial, fluxo de caixa, depreciação, provisões, conciliações, ECD, ECF, SPED Contábil, normas CPC e IFRS. Responda de forma técnica e objetiva em português. Quando relevante, inclua os lançamentos contábeis (débito/crédito).`,
+    histories: []
+  }
+};
+
+async function sendMsg(agentId) {
+  const input = document.getElementById('input-' + agentId);
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  appendUserMsg(agentId, text);
+  const typingId = appendTyping(agentId);
+  const cfg = AGENT_CONFIGS[agentId];
+  cfg.histories.push({ role: 'user', content: text });
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: cfg.system,
+        messages: cfg.histories
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.map(b => b.text || '').join('') || 'Erro ao obter resposta.';
+    cfg.histories.push({ role: 'assistant', content: reply });
+    removeTyping(agentId, typingId);
+    appendAiMsg(agentId, reply);
+  } catch(e) {
+    removeTyping(agentId, typingId);
+    appendAiMsg(agentId, '❌ Erro de conexão. Verifique sua rede e tente novamente.');
+  }
+}
+
+function quickMsg(agentId, text) {
+  document.getElementById('input-' + agentId).value = text;
+  sendMsg(agentId);
+}
+
+function appendUserMsg(agentId, text) {
+  const chat = document.getElementById('chat-' + agentId);
+  const div = document.createElement('div');
+  div.className = 'msg-user';
+  div.innerHTML = `<div class="msg-bubble msg-bubble-user">${escHtml(text)}</div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function appendAiMsg(agentId, text) {
+  const chat = document.getElementById('chat-' + agentId);
+  const div = document.createElement('div');
+  div.className = 'msg-ai';
+  // Formatar markdown simples
+  const formatted = text
+    .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+    .replace(/\*(.*?)\*/g, '<i>$1</i>')
+    .replace(/^•\s/gm, '• ')
+    .replace(/\n/g, '<br>');
+  div.innerHTML = `<div class="msg-bubble msg-bubble-ai">${formatted}</div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function appendTyping(agentId) {
+  const chat = document.getElementById('chat-' + agentId);
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'msg-ai';
+  div.id = id;
+  div.innerHTML = `<div class="msg-bubble msg-bubble-ai msg-typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+  return id;
+}
+
+function removeTyping(agentId, typingId) {
+  const el = document.getElementById(typingId);
+  if (el) el.remove();
+}
+
+function clearChat(agentId) {
+  const chat = document.getElementById('chat-' + agentId);
+  const welcomes = {
+    'fiscal': 'Olá! Sou o <b>Agente Fiscal</b>. Como posso ajudar?',
+    'financeiro': 'Olá! Sou o <b>Agente Financeiro</b>. Como posso ajudar?',
+    'rh': 'Olá! Sou o <b>Agente RH</b>. Como posso ajudar?',
+    'juridico-ia': 'Olá! Sou o <b>Agente Jurídico</b>. Como posso ajudar?',
+    'contabil': 'Olá! Sou o <b>Agente Contábil</b>. Como posso ajudar?'
+  };
+  chat.innerHTML = `<div class="msg-ai"><div class="msg-bubble msg-bubble-ai">${welcomes[agentId]||'Olá!'}</div></div>`;
+  if (AGENT_CONFIGS[agentId]) AGENT_CONFIGS[agentId].histories = [];
+}
+
+function escHtml(t) {
+  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+</script>
+</body>
+</html>
